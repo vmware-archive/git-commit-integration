@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe "home/show.html.erb" do
   it "renders title" do
