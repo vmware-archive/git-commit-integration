@@ -48,7 +48,6 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'fixture_builder'
   gem 'omniauth-github'
-  gem 'dotenv-rails', :github => 'bkeepers/dotenv'
 end
 
 group :development do
