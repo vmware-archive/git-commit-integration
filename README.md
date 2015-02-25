@@ -1,4 +1,4 @@
-Git Commit Integration
+# Git Commit Integration
 
 Exploring features described in https://github.com/pivotaltracker/git-commit-ux/blob/master/README.md
 
@@ -20,8 +20,9 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Display one or all commits for a given ref (branch)
 
 ### Killer Features
-* Display all commits which associated with a given external link,
+* Display all commits which are associated with a given external link,
   grouped by which branches they exist on
+* Display all commits which are associated with a given external ID
 * Display differently (strikethrough) all commits which no longer currently
   exist on a branch
   * Obtained by listing all commits (https://developer.github.com/v3/repos/commits/) for each existing
