@@ -17,7 +17,7 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Display one or all pushes for a repo
 * Display one or all commits for a repo
 * Display all branches for a repo (i.e. head refs: `curl -s https://api.github.com/repos/:owner/:repo/git/refs/heads`)
-* Display one or all commits for a given ref (branch)
+* Display all commits which are currently or were previously on a given branch (ref)
 
 ### Killer Features
 * Display all commits which are associated with a given external link,
@@ -29,7 +29,6 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
     branch (i.e. head ref)
 * Display differently (Grouping or Collapsing based on `patch-id`) all different commits which have different
   SHAs but are actually the same commit based on the `patch-id`
-* Display all commits which are currently or were previously on a given branch
 
 ## Models
 
