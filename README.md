@@ -8,7 +8,7 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Signup/signin with GitHub Oauth2, with authorizations to
   create a webhook for a repo and read diff/patch commit data for the repo
   (https://developer.github.com/guides/getting-started/#oauth)
-* I should be able to enter a Github Repo URL which will automatically have a
+* Enter a Github Repo URL which will automatically have a
   Github webhook created which will be listened to for pushes to that repository
   (https://developer.github.com/v3/repos/hooks/#create-a-hook)
 * Configure an External Link which has a pattern to extract an external ID
