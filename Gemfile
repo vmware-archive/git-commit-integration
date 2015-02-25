@@ -51,3 +51,7 @@ group :development, :test do
   gem 'dotenv-rails', :github => 'bkeepers/dotenv'
 end
 
+group :development do
+  gem 'dotenv-rails', :github => 'bkeepers/dotenv'
+end
+
