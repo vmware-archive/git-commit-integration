@@ -2,6 +2,38 @@
 
 Exploring features described in https://github.com/pivotaltracker/git-commit-ux/blob/master/README.md
 
+## Setup
+
+### Installing/fixing postgres on OSX
+
+```
+brew update
+
+brew install postgresql
+# or
+brew upgrade postgresql
+
+brew info postgresql # follow instructions to run on boot
+
+# DANGEROUS!
+rm -rf /usr/local/var/postgres
+
+initdb /usr/local/var/postgres -E utf8
+```
+
+### Running specs
+
+```
+bundle
+bin/rake
+```
+
+### Setting up google oauth2 in development env
+
+* Make a github application: https://github.com/settings/applications
+* copy .env.local.example to .env.local
+* Copy the app's client id and client secret into .env.local
+
 ## Features
 
 ### Supporting Features

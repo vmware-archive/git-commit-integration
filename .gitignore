@@ -53,3 +53,9 @@ bower.json
 
 # Rubymine
 .idea
+
+# fixture_builder
+spec/fixtures/*.yml
+
+# dotenv
+.env.local
