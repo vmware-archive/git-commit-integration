@@ -16,6 +16,8 @@ Bundler.require(*Rails.groups)
 
 Dotenv::Railtie.load if Rails.env.development?
 
+require_relative '../lib/cloud_foundry_logger_extensions'
+
 module TrackerGit
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
