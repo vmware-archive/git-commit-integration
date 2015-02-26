@@ -19,7 +19,11 @@
         </div>
       </div>
       <div class="col-xs-3">
-        <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure this page is https before clicking)
+        <% if user_signed_in? %>
+          <%= current_user.email %> - <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+        <% else %>
+          <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure this page is https before clicking)
+        <% end %>
       </div>
     </div>
     <div class="row">
