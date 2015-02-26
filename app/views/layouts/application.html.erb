@@ -1,21 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TrackerGit</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title>Git Commit Integration</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<% if notice %>
-  <p class="notice"><%= notice %></p>
-<% end %>
-<% if alert %>
-  <p class="alert"><%= alert %></p>
-<% end %>
-
-<%= yield %>
-
+  <div id="main-container" class="container-fluid">
+    <div class="row header">
+      <div class="col-xs-9">
+        <div class="row">
+          <h1>Git Commit Integration</h1>
+        </div>
+        <div class="row">
+          <a href="https://www.pivotaltracker.com/n/projects/1286262">Project Backlog on Pivotal Tracker</a> -
+          <a href="https://github.com/pivotaltracker/git-commit-integration">Source Code on Github</a>
+        </div>
+      </div>
+      <div class="col-xs-3">
+        <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure this page is https before clicking)
+      </div>
+    </div>
+    <div class="row">
+      <div id="sidebar" class="col-xs-3">
+        <div>
+            Menu Placeholder
+        </div>
+      </div>
+      <div id="main-content" class="col-xs-9">
+        <% if notice %>
+          <p class="notice"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert"><%= alert %></p>
+        <% end %>
+        <%= yield %>
+      </div>
+    </div>
+    <div class="row footer">
+    </div>
+  </div>
 </body>
 </html>
