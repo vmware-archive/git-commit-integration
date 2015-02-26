@@ -1,0 +1,1 @@
+web: bin/rake db:create; bin/rake db:migrate && bundle exec puma -e development -p 3000 -S ~/puma -C config/puma.rb

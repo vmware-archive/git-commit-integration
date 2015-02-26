@@ -1,0 +1,14 @@
+---
+applications:
+- name: git-commit-integration
+  memory: 1500M
+  instances: 1
+  host: git-commit-integration
+  domain: cfapps.io
+  timeout: 90
+  command: bundle exec foreman start -f Procfile
+  services:
+  - rails-postgres
+#  env:
+#    GITHUB_KEY: "set via console.run.pivotal.io"
+#    GITHUB_SECRET: "set via console.run.pivotal.io"

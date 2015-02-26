@@ -30,9 +30,25 @@ bin/rake
 
 ### Setting up google oauth2 in development env
 
-* Make a github application: https://github.com/settings/applications
+* Make a github dev application: https://github.com/settings/applications
 * copy .env.local.example to .env.local
 * Copy the app's client id and client secret into .env.local
+
+### Running dev env
+
+```
+bundle
+foreman start -f Procfile.local
+```
+
+Go to http://localhost:3000
+
+### Running PWS prod env
+
+* Make a github prod application: https://github.com/settings/applications
+* create a space on PWS, get cf command line, log in
+* `cf push`
+* Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
 
 ## Features
 
