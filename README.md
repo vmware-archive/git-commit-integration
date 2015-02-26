@@ -84,7 +84,7 @@ Go to http://localhost:3000
 
 Attributes:
 
-* **`repo`**: URI of Github repo
+* **`url`**: URL of Github repo
 * **`hook`**: JSON for github webhook listening for push events: https://developer.github.com/v3/repos/hooks/#create-a-hook
 
 Associations:

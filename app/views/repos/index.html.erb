@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Repos</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Url</th>
+      <th>Hook</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @repos.each do |repo| %>
+      <tr>
+        <td><%= repo.url %></td>
+        <td><%= repo.hook %></td>
+        <td><%= link_to 'Show', repo %></td>
+        <td><%= link_to 'Edit', edit_repo_path(repo) %></td>
+        <td><%= link_to 'Destroy', repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Repo', new_repo_path %>

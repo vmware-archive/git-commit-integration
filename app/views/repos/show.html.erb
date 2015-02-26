@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @repo.url %>
+</p>
+
+<p>
+  <strong>Hook:</strong>
+  <%= @repo.hook %>
+</p>
+
+<%= link_to 'Edit', edit_repo_path(@repo) %> |
+<%= link_to 'Back', repos_path %>
