@@ -44,6 +44,8 @@ gem 'foreman'
 
 gem 'github_api'
 
+gem 'clockwork'
+
 group :production do
   gem 'rails_12factor'
 end
