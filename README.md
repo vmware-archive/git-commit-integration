@@ -213,12 +213,18 @@ foreman start -f Procfile.local
 Run ngrok to tunnel github webhooks to localhost
 ```
 brew install ngrok
-ngrok 80
+ngrok 3000
 # grab ngrok host, e.g. 47302125.ngrok.com
 # put it in .env.local as NGROK_HOST=47302125.ngrok.com
 ```
 
-Go to http://localhost:3000
+* Go to http://localhost:3000
+* Click to authorize app
+* Make a repo
+* Click (re)create Webhook on the repo
+* Verify the webhook looks right in github settings
+* Make a push to the repo
+* Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.
 
 ### Running PWS prod env
 
