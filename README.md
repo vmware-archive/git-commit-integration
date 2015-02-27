@@ -207,6 +207,7 @@ bin/rake
 
 ```
 bundle
+bin/rake db:create:all
 foreman start -f Procfile.local
 ```
 
@@ -221,7 +222,7 @@ ngrok 3000
 * Go to http://localhost:3000
 * Click to authorize app
 * Make a repo
-* Click (re)create Webhook on the repo
+* Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
 * Verify the webhook looks right in github settings
 * Make a push to the repo
 * Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.

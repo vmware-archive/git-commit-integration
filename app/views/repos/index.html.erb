@@ -24,7 +24,7 @@
           <td><%= link_to 'Show', repo %></td>
           <td><%= link_to 'Edit', edit_repo_path(repo) %></td>
           <td><%= link_to 'Destroy', repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= link_to '(re)create Webhook', repo_create_hook_path(id: repo.id) %></td>
+          <td><%= link_to '(re)create Webhook', repo_create_hook_path(id: repo.id) %> (must be owner)</td>
         </tr>
       <% end %>
     </tbody>
