@@ -115,9 +115,14 @@ Associations:
 Association table between refs and commits.  `exists` flag is automatically updated after each push, by listing all
 currently-existing commits on the ref, and marking previous ones as existing or not.
 
-* **`ref_id`**: ID of ref
-* **`commit_id`**: ID of commit
+Attributes:
+
 * **`exists`**: boolean, indicating whether commit currently exists in ref.
+
+Associations:
+
+* `belongs_to :ref`
+* `belongs_to :commit`
 
 ### ExternalLink
 
