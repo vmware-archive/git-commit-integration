@@ -9,7 +9,7 @@
 <body>
   <div id="main-container" class="container-fluid">
     <div class="row header">
-      <div class="col-xs-9">
+      <div class="col-xs-5">
         <div class="row">
           <h1>Git Commit Integration</h1>
         </div>
@@ -18,9 +18,18 @@
           <a href="https://github.com/pivotaltracker/git-commit-integration">Source Code on Github</a>
         </div>
       </div>
+      <div class="col-xs-4">
+        <% if notice %>
+          <p class="notice"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert"><%= alert %></p>
+        <% end %>
+
+      </div>
       <div class="col-xs-3">
         <% if user_signed_in? %>
-          <%= current_user.email %> - <%= link_to "Logout", destroy_user_session_path, method: :delete %> -
+          <%= current_user.email %> - <%= link_to "Logout", destroy_user_session_path, method: :delete %>
         <% else %>
           <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure this page is https before clicking)
         <% end %>
@@ -31,12 +40,6 @@
         <%= render "shared/menu" %>
       </div>
       <div id="main-content" class="col-xs-9">
-        <% if notice %>
-          <p class="notice"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p class="alert"><%= alert %></p>
-        <% end %>
         <%= yield %>
       </div>
     </div>
