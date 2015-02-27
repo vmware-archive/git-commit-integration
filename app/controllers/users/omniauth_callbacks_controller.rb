@@ -13,7 +13,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def failure
-    super
+    # super  # TODO: This is from one of the examples, but it puts the page in an endless redirect loop
+    redirect_to root_path
   end
 
   def after_omniauth_failure_path_for(scope)

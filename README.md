@@ -41,6 +41,14 @@ bundle
 foreman start -f Procfile.local
 ```
 
+Run ngrok to tunnel github webhooks to localhost
+```
+brew install ngrok
+ngrok 80
+# grab ngrok host, e.g. 47302125.ngrok.com
+# put it in .env.local as NGROK_HOST=47302125.ngrok.com
+```
+
 Go to http://localhost:3000
 
 ### Running PWS prod env

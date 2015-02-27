@@ -1,5 +1,5 @@
 class ReposController < ApplicationController
-  before_action :set_repo, only: [:show, :edit, :update, :destroy]
+  before_action :set_repo, only: [:show, :edit, :update, :destroy, :create_hook]
 
   # GET /repos
   # GET /repos.json
@@ -59,6 +59,11 @@ class ReposController < ApplicationController
       format.html { redirect_to repos_url, notice: 'Repo was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def create_hook
+    @repo.create_hook(current_user, request.original_url)
+    redirect_to repos_path
   end
 
   private
