@@ -69,7 +69,7 @@ Attributes:
 Associations:
 
 * `has_many :commits`
-* `belongs_to :repo
+* `belongs_to :repo`
 
 ### Commit
 
