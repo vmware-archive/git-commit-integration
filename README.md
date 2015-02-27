@@ -2,62 +2,6 @@
 
 Exploring features described in https://github.com/pivotaltracker/git-commit-ux/blob/master/README.md
 
-## Setup
-
-### Installing/fixing postgres on OSX
-
-```
-brew update
-
-brew install postgresql
-# or
-brew upgrade postgresql
-
-brew info postgresql # follow instructions to run on boot
-
-# DANGEROUS!
-rm -rf /usr/local/var/postgres
-
-initdb /usr/local/var/postgres -E utf8
-```
-
-### Running specs
-
-```
-bundle
-bin/rake
-```
-
-### Setting up google oauth2 in development env
-
-* Make a github dev application: https://github.com/settings/applications
-* copy .env.local.example to .env.local
-* Copy the app's client id and client secret into .env.local
-
-### Running dev env
-
-```
-bundle
-foreman start -f Procfile.local
-```
-
-Run ngrok to tunnel github webhooks to localhost
-```
-brew install ngrok
-ngrok 80
-# grab ngrok host, e.g. 47302125.ngrok.com
-# put it in .env.local as NGROK_HOST=47302125.ngrok.com
-```
-
-Go to http://localhost:3000
-
-### Running PWS prod env
-
-* Make a github prod application: https://github.com/settings/applications
-* create a space on PWS, get cf command line, log in
-* `cf push`
-* Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
-
 ## Features
 
 ### Supporting Features
@@ -226,4 +170,60 @@ Associations:
 * Background job will run for each push, and create/update
   Refs, Commits, RefCommits, and update all RefCommit `exists` flags
   accordingly.
+
+## Setup
+
+### Installing/fixing postgres on OSX
+
+```
+brew update
+
+brew install postgresql
+# or
+brew upgrade postgresql
+
+brew info postgresql # follow instructions to run on boot
+
+# DANGEROUS!
+rm -rf /usr/local/var/postgres
+
+initdb /usr/local/var/postgres -E utf8
+```
+
+### Running specs
+
+```
+bundle
+bin/rake
+```
+
+### Setting up google oauth2 in development env
+
+* Make a github dev application: https://github.com/settings/applications
+* copy .env.local.example to .env.local
+* Copy the app's client id and client secret into .env.local
+
+### Running dev env
+
+```
+bundle
+foreman start -f Procfile.local
+```
+
+Run ngrok to tunnel github webhooks to localhost
+```
+brew install ngrok
+ngrok 80
+# grab ngrok host, e.g. 47302125.ngrok.com
+# put it in .env.local as NGROK_HOST=47302125.ngrok.com
+```
+
+Go to http://localhost:3000
+
+### Running PWS prod env
+
+* Make a github prod application: https://github.com/settings/applications
+* create a space on PWS, get cf command line, log in
+* `cf push`
+* Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
 
