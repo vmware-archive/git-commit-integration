@@ -93,7 +93,6 @@ Attributes:
 Associations:
 
 * `belongs_to :push`
-* `belongs_to :repo`
 * `belongs_to :author_github_user, :class_name => 'GithubUser', :foreign_key => 'author_github_user_id'`
 * `belongs_to :committer_github_user, :class_name => 'GithubUser', :foreign_key => 'committer_github_user_id'`
 
