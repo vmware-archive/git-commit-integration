@@ -14,8 +14,8 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Configure an External Link which has a pattern to extract an external ID
   from a git commit message and a replacement pattern to construct an external URI from the ID
 * Associate one or more External Links with a Repo
-* Display one or all pushes for a repo
-* Display one or all commits for a repo
+* Display pushes for a specific repo
+* Display commits for a specific push
 * Display all branches for a repo (i.e. head refs: `curl -s https://api.github.com/repos/:owner/:repo/git/refs/heads`)
 * Display all commits which are currently or were previously on a given branch (ref)
 
@@ -37,6 +37,7 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 Attributes:
 
 * **`url`**: URL of Github repo
+* **`github_identifier`**: Internal ID of repo in github API
 * **`hook`**: JSON for github webhook listening for push events: https://developer.github.com/v3/repos/hooks/#create-a-hook
 
 Associations:
@@ -224,7 +225,7 @@ ngrok 3000
 * Make a repo
 * Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
 * Verify the webhook looks right in github settings
-* Make a push to the repo
+* Make a push to the repo (from a dummy branch if you don't want to clutter master): `echo "foo." >> foo && git add foo && git ci -m "foo" && git push`
 * Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.
 
 ### Running PWS prod env
@@ -233,4 +234,36 @@ ngrok 3000
 * create a space on PWS, get cf command line, log in
 * `cf push`
 * Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
+
+### Using Github API from rails console
+
+See https://github.com/peter-murach/github
+
+Basic setup:
+```
+bin/rails c
+repo = Repo.first # or find...
+repo.current_user = User.first # or find...
+```
+
+To get a repo object directly:
+```
+repo_api_object = repo.github_api_object
+```
+
+To access repo object subresources (continuing from basic setup above):
+```
+require 'github_api_factory'
+include GithubApiFactory
+github_user, github_repo = repo.user_and_repo
+github = create_github_api_from_oauth_token(repo.current_user)
+github.repos.branches(github_user, github_repo).body.map{|branch| branch.name} # branches
+github.repos.commits.all(github_user, github_repo) # all commits on default branch (master)
+github.repos.commits.all(github_user, github_repo).first # first commit on default branch
+github.repos.commits.all(github_user, github_repo, sha: 'some sha').first.commit.message  # get all commits then message of first
+github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').sha # find a commit then get its sha
+github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').commit.message  # find a commit then get its message
+```
+
+See https://developer.github.com/v3/repos/commits/ for commits structure
 

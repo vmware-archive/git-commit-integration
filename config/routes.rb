@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   end
 
   authenticate :user do
-    resources :repos
+    resources :repos do
+      resources :pushes
+    end
     get 'repos/:id/create_hook', to: 'repos#create_hook', as: :repo_create_hook
 
     resources :pushes

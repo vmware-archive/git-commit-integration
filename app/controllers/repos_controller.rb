@@ -25,6 +25,7 @@ class ReposController < ApplicationController
   # POST /repos.json
   def create
     @repo = Repo.new(repo_params)
+    @repo.current_user = current_user
 
     respond_to do |format|
       if @repo.save
@@ -62,7 +63,8 @@ class ReposController < ApplicationController
   end
 
   def create_hook
-    @repo.create_hook(current_user, request.original_url)
+    @repo.current_user = current_user
+    @repo.create_hook(request.original_url)
     redirect_to repos_path
   end
 

@@ -1,11 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Pushes</h1>
+<h1>
+  Listing Pushes
+  <% if @repo %>
+    for Repo <%= @repo.url %>
+  <% end %>
+</h1>
 
 <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
+        <th>Repo ID</th>
         <th>Ref</th>
         <th>Head commit</th>
         <th>Payload</th>
@@ -16,6 +22,7 @@
     <tbody>
       <% @pushes.each do |push| %>
         <tr>
+          <td><%= push.repo_id %></td>
           <td><%= push.ref %></td>
           <td><%= push.head_commit %></td>
           <td>
