@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Commits</h1>
+<h1>
+  Listing Commits
+  <% if @push %>
+    for Push head_commit <%= @push.head_commit %>
+  <% end %>
+</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Sha</th>
+      <th>Parent sha</th>
+      <th>Patch</th>
+      <th>Message</th>
+      <th>Author github user</th>
+      <th>Author date</th>
+      <th>Committer github user</th>
+      <th>Committer date</th>
+      <th>Push</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @commits.each do |commit| %>
+      <tr>
+        <td><%= commit.data %></td>
+        <td><%= commit.sha %></td>
+        <td><%= commit.parent_sha %></td>
+        <td><%= commit.patch_id %></td>
+        <td><%= commit.message %></td>
+        <td><%= commit.author_github_user_id %></td>
+        <td><%= commit.author_date %></td>
+        <td><%= commit.committer_github_user_id %></td>
+        <td><%= commit.committer_date %></td>
+        <td><%= commit.push_id %></td>
+        <td><%= link_to 'Show', commit %></td>
+        <td><%= link_to 'Edit', edit_commit_path(commit) %></td>
+        <td><%= link_to 'Destroy', commit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Commit', new_commit_path %>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :commits
+
   get 'github/authorize'
   get 'users/auth/github/callback/auth_app_callback', to: 'github#auth_app_callback'
 
@@ -13,7 +15,9 @@ Rails.application.routes.draw do
 
   authenticate :user do
     resources :repos do
-      resources :pushes
+      resources :pushes do
+        resources :commits
+      end
     end
     get 'repos/:id/create_hook', to: 'repos#create_hook', as: :repo_create_hook
 

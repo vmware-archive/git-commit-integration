@@ -1,0 +1,57 @@
+<%= form_for(@commit) do |f| %>
+  <% if @commit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@commit.errors.count, "error") %> prohibited this commit from being saved:</h2>
+
+      <ul>
+      <% @commit.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :data %><br>
+    <%= f.text_field :data %>
+  </div>
+  <div class="field">
+    <%= f.label :sha %><br>
+    <%= f.text_field :sha %>
+  </div>
+  <div class="field">
+    <%= f.label :parent_sha %><br>
+    <%= f.text_field :parent_sha %>
+  </div>
+  <div class="field">
+    <%= f.label :patch_id %><br>
+    <%= f.text_field :patch_id %>
+  </div>
+  <div class="field">
+    <%= f.label :message %><br>
+    <%= f.text_field :message %>
+  </div>
+  <div class="field">
+    <%= f.label :author_github_user_id %><br>
+    <%= f.number_field :author_github_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :author_date %><br>
+    <%= f.datetime_select :author_date %>
+  </div>
+  <div class="field">
+    <%= f.label :committer_github_user_id %><br>
+    <%= f.number_field :committer_github_user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :committer_date %><br>
+    <%= f.datetime_select :committer_date %>
+  </div>
+  <div class="field">
+    <%= f.label :push_id %><br>
+    <%= f.number_field :push_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

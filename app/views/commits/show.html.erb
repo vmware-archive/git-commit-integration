@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @commit.data %>
+</p>
+
+<p>
+  <strong>Sha:</strong>
+  <%= @commit.sha %>
+</p>
+
+<p>
+  <strong>Parent sha:</strong>
+  <%= @commit.parent_sha %>
+</p>
+
+<p>
+  <strong>Patch:</strong>
+  <%= @commit.patch_id %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @commit.message %>
+</p>
+
+<p>
+  <strong>Author github user:</strong>
+  <%= @commit.author_github_user_id %>
+</p>
+
+<p>
+  <strong>Author date:</strong>
+  <%= @commit.author_date %>
+</p>
+
+<p>
+  <strong>Committer github user:</strong>
+  <%= @commit.committer_github_user_id %>
+</p>
+
+<p>
+  <strong>Committer date:</strong>
+  <%= @commit.committer_date %>
+</p>
+
+<p>
+  <strong>Push:</strong>
+  <%= @commit.push_id %>
+</p>
+
+<%= link_to 'Edit', edit_commit_path(@commit) %> |
+<%= link_to 'Back', commits_path %>

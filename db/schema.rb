@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227174744) do
+ActiveRecord::Schema.define(version: 20150227224427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "commits", force: :cascade do |t|
+    t.string   "data"
+    t.string   "sha"
+    t.string   "parent_sha"
+    t.string   "patch_id"
+    t.string   "message"
+    t.integer  "author_github_user_id"
+    t.datetime "author_date"
+    t.integer  "committer_github_user_id"
+    t.datetime "committer_date"
+    t.integer  "push_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "pushes", force: :cascade do |t|
     t.string   "payload"

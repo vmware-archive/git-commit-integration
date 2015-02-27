@@ -1,4 +1,5 @@
 class Push < ActiveRecord::Base
+  has_many :commits
   belongs_to :repo
 
   validates_presence_of(:repo_id)
