@@ -19,13 +19,20 @@
         </div>
       </div>
       <div class="col-xs-4">
-        <% if notice %>
-          <p class="notice"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p class="alert"><%= alert %></p>
-        <% end %>
-
+        <div class="row">
+          <p class="disclaimer">WARNING: This app is a spike/proof of concept.  It is not TDD'd, does not handle
+          errors, and may be insecure.  Use with sensitive data or accounts at your own risk.</p>
+        </div>
+        <div class="row">
+          <% if notice %>
+            <p class="alert-info"><%= notice %></p>
+          <% end %>
+        </div>
+        <div class="row">
+          <% if alert %>
+            <p class="alert-warning"><%= alert %></p>
+          <% end %>
+        </div>
       </div>
       <div class="col-xs-3">
         <% if user_signed_in? %>
@@ -36,10 +43,10 @@
       </div>
     </div>
     <div class="row">
-      <div id="sidebar" class="col-xs-3">
+      <div id="sidebar" class="col-xs-2">
         <%= render "shared/menu" %>
       </div>
-      <div id="main-content" class="col-xs-9">
+      <div id="main-content" class="col-xs-10">
         <%= yield %>
       </div>
     </div>

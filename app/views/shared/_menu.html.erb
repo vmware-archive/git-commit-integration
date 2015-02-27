@@ -1,13 +1,15 @@
 <div>
   <ul>
     <li>
-      Setup
+      Admin
       <ul>
         <li>
-          <%= link_to "Authorize App With Github", github_authorize_path, data: { no_turbolink: true } %>
+          <%= link_to "Authorize App", github_authorize_path, data: { no_turbolink: true } %>
         </li>
       </ul>
     </li>
-    <%= link_to "Repos", repos_path %>
+    <li>
+      <%= link_to "Repos", repos_path %>
+    </li>
   </ul>
 </div>
