@@ -13,7 +13,7 @@ class Repo < ActiveRecord::Base
     else
       host_port = "#{req_uri.host}:#{req_uri.port}"
     end
-    webhook_url = "#{req_uri.scheme}://#{host_port}/pushes/create"
+    webhook_url = "#{req_uri.scheme}://#{host_port}/pushes/receive"
 
     hook_config = {
       content_type: 'json',

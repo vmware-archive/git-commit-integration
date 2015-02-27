@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Payload:</strong>
+  <%= @push.payload %>
+</p>
+
+<p>
+  <strong>Ref:</strong>
+  <%= @push.ref %>
+</p>
+
+<p>
+  <strong>Head commit:</strong>
+  <%= @push.head_commit %>
+</p>
+
+<%= link_to 'Edit', edit_push_path(@push) %> |
+<%= link_to 'Back', pushes_path %>

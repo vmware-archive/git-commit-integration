@@ -12,10 +12,13 @@ Rails.application.routes.draw do
   end
 
   authenticate :user do
-    resources :repos do
-    end
+    resources :repos
     get 'repos/:id/create_hook', to: 'repos#create_hook', as: :repo_create_hook
+
+    resources :pushes
   end
 
+  # unsecure and unauthencated actions:
+  post 'pushes/receive', to: 'pushes#receive'
   root 'home#show'
 end

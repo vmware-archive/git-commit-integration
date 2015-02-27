@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pushes</h1>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Ref</th>
+        <th>Head commit</th>
+        <th>Payload</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @pushes.each do |push| %>
+        <tr>
+          <td><%= push.ref %></td>
+          <td><%= push.head_commit %></td>
+          <td>
+            <div class="json">
+              <%= push.payload %>
+            </div>
+          </td>
+          <td><%= link_to 'Show', push %></td>
+          <td><%= link_to 'Edit', edit_push_path(push) %></td>
+          <td><%= link_to 'Destroy', push, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'New Push', new_push_path %>

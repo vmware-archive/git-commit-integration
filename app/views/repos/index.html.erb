@@ -16,8 +16,10 @@
       <% @repos.each do |repo| %>
         <tr>
           <td><%= repo.url %></td>
-          <td class="hook_json">
-            <%= repo.hook %>
+          <td>
+            <div class="json">
+              <%= repo.hook %>
+            </div>
           </td>
           <td><%= link_to 'Show', repo %></td>
           <td><%= link_to 'Edit', edit_repo_path(repo) %></td>
