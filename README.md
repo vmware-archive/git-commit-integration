@@ -85,9 +85,9 @@ Attributes:
   * `curl -H "Accept: application/vnd.github.v3.patch" -s https://api.github.com/repos/:user/:repo/commits/:sha | git patch-id --stable`
 * **`message`**: Message of the commit (which may contain an external ID pattern from which an external ID
   can be extracted by an ExternalLink)
-* **`author_github_user_id`**: github username of author
+* **`author_github_user_id`**: id of author github_user
 * **`author_date`**: date when this commit was originally made (http://stackoverflow.com/questions/11856983/why-git-authordate-is-different-from-commitdate)
-* **`committer_github_user_id`**: github username of committer
+* **`committer_github_user_id`**: id of committer github_user
 * **`committer_date`**: date when this commit was last modified
 
 Associations:
