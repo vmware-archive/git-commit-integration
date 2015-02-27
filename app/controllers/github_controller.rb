@@ -5,7 +5,7 @@ class GithubController < ApplicationController
     if Rails.env.development?
       address = app_github.authorize_url redirect_uri: 'http://localhost:3000/users/auth/github/callback/auth_app_callback', scope: scopes
     else
-      address = app_github.authorize_url redirect_uri: users_auth_github_callback_auth_app_callback_path, scope: scopes
+      address = app_github.authorize_url redirect_uri: users_auth_github_callback_auth_app_callback_url, scope: scopes
     end
     redirect_to address
   end
