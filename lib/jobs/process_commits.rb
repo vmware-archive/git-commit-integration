@@ -6,5 +6,3 @@ class ProcessCommits
     puts "#{DateTime.now.utc.iso8601} [Clockwork ProcessCommits] Finished Running"
   end
 end
-
-ProcessCommits.new.process

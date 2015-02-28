@@ -37,6 +37,6 @@ module TrackerGit
 
     config.action_dispatch.perform_deep_munge = false
 
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths += %w(lib lib/jobs).map { |path| Rails.root.join(path) }
   end
 end
