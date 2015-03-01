@@ -208,6 +208,22 @@ bin/rake
 * copy .env.local.example to .env.local
 * Copy the app's client id and client secret into .env.local
 
+### Installing ngrok
+
+Install ngrok to tunnel github webhooks to localhost (it will be run via foreman Procfile.local)
+
+```
+brew install ngrok
+```
+
+Make sure it runs, and grab the NGROK_HOST to put in your .env.local (it shouldn't change often)
+
+```
+ngrok 3000
+# grap the host, put in env.local
+# Ctrl C to kill it
+```
+
 ### Running dev env
 
 ```
@@ -216,14 +232,7 @@ bin/rake db:create:all
 foreman start -f Procfile.local
 ```
 
-Run ngrok to tunnel github webhooks to localhost
-```
-brew install ngrok
-ngrok 3000
-# grab ngrok host, e.g. 47302125.ngrok.com
-# put it in .env.local as NGROK_HOST=47302125.ngrok.com
-```
-
+* (Optional) go to localhost:4040 to verify your NGROK_HOST hasn't changed
 * Go to http://localhost:3000
 * Click to authorize app
 * Make a repo

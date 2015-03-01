@@ -1,2 +1,3 @@
 web: bin/rake db:create; bin/rake db:migrate && bundle exec puma -e development -p 3000 -S ~/puma -C config/puma.rb
 clock: bin/clockwork lib/clockwork_commit_processor.rb
+ngrok: ngrok -log='stdout' 3000 | grep -E -v '(Ping|Pong|Waiting to read message|Reading message with length)'
