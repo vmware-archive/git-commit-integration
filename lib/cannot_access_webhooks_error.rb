@@ -1,0 +1,2 @@
+class CannotAccessWebhooksError < RuntimeError
+end

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :parent_commits
+
+  resources :github_users
+
   resources :commits
 
   get 'github/authorize'
@@ -25,6 +29,6 @@ Rails.application.routes.draw do
   end
 
   # unsecure and unauthencated actions:
-  post 'pushes/receive', to: 'pushes#receive'
+  post 'repos/:repo_id/pushes/receive', to: 'pushes#receive'
   root 'home#show'
 end

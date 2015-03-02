@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Commit:</strong>
+  <%= @parent_commit.commit_id %>
+</p>
+
+<p>
+  <strong>Sha:</strong>
+  <%= @parent_commit.sha %>
+</p>
+
+<%= link_to 'Edit', edit_parent_commit_path(@parent_commit) %> |
+<%= link_to 'Back', parent_commits_path %>

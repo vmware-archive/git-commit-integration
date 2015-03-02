@@ -74,6 +74,6 @@ class CommitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commit_params
-      params.require(:commit).permit(:data, :sha, :parent_sha, :patch_id, :message, :author_github_user_id, :author_date, :committer_github_user_id, :committer_date, :push_id)
+      params.require(:commit).permit(:data, :sha, :patch_id, :message, :author_github_user_id, :author_date, :committer_github_user_id, :committer_date, :push_id)
     end
 end

@@ -16,6 +16,10 @@
     <%= f.text_field :repo_id %>
   </div>
   <div class="field">
+    <%= f.label :commits_processed %><br>
+    <%= f.check_box :commits_processed %>
+  </div>
+  <div class="field">
     <%= f.label :payload %><br>
     <%= f.text_field :payload %>
   </div>

@@ -32,6 +32,19 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 
 ## Models
 
+### User
+
+Created via Github Oauth authentication.
+
+Attributes:
+
+* **`email`**: User's github email
+* **`github_app_token`**: Token from authorizing app to access github
+
+Associations:
+
+* `has_many :repos`
+
 ### Repo
 
 Attributes:
@@ -46,6 +59,7 @@ Associations:
 * `has_many :commits`
 * `has_many :refs` (auto-updated on every push)
 * `has_many :external_links, through: :repo_external_link`
+* `belongs_to :user`
 
 ### GithubUser
 
@@ -78,7 +92,6 @@ Attributes:
 
 * **`data`**: Github commit object json
 * **`sha`**: SHA of commit
-* **`parent_sha`**: SHA of commit's parent
 * **`patch_id`**: patch-id of commit
   * http://git-scm.com/docs/git-patch-id
   * http://git-scm.com/book/en/v2/Git-Branching-Rebasing#Rebase-When-You-Rebase
@@ -95,6 +108,21 @@ Associations:
 * `belongs_to :push`
 * `belongs_to :author_github_user, :class_name => 'GithubUser', :foreign_key => 'author_github_user_id'`
 * `belongs_to :committer_github_user, :class_name => 'GithubUser', :foreign_key => 'committer_github_user_id'`
+* `has_many :parent_commits`
+
+### ParentCommit
+
+These are parent commits of a commit.  These may or may not correspond to an existing Commit which was
+created as part of a push webhook event payload.
+
+Attributes:
+
+* **`commit_id`**: id of child Commit
+* **`sha`**: SHA of this parent commit
+
+Associations:
+
+* `belongs_to :commit`
 
 ### Ref
 
@@ -256,7 +284,6 @@ Basic setup:
 ```
 bin/rails c
 repo = Repo.first # or find...
-repo.current_user = User.first # or find...
 ```
 
 To get a repo object directly:

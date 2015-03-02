@@ -1,7 +1,7 @@
 class PushesController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:receive]
   before_action :set_push, only: [:show, :edit, :update, :destroy]
-  before_action :set_repo, only: [:index]
+  before_action :set_repo, only: [:index, :receive]
 
   # GET /pushes
   # GET /pushes.json
@@ -67,6 +67,7 @@ class PushesController < ApplicationController
     params.permit!
     begin
       @push = Push.from_webhook(params.to_hash)
+      @push.repo = @repo
       @push.save!
     rescue RuntimeError => e
       error_msg = "error when recieving webhook: #{e.inspect}"

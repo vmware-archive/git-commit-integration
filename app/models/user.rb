@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  has_many :repos
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:github]
@@ -13,7 +15,7 @@ class User < ActiveRecord::Base
     user = User.where(email: data.fetch('email')).first
 
     unless user
-      user = User.create(email: data.fetch('email'))
+      user = User.create!(email: data.fetch('email'))
     end
 
     user

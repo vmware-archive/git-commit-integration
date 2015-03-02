@@ -11,36 +11,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227224427) do
+ActiveRecord::Schema.define(version: 20150301230541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "commits", force: :cascade do |t|
-    t.string   "data"
-    t.string   "sha"
-    t.string   "parent_sha"
-    t.string   "patch_id"
-    t.string   "message"
-    t.integer  "author_github_user_id"
-    t.datetime "author_date"
-    t.integer  "committer_github_user_id"
-    t.datetime "committer_date"
-    t.integer  "push_id"
+    t.string   "data",                     null: false
+    t.string   "sha",                      null: false
+    t.string   "patch_id",                 null: false
+    t.string   "message",                  null: false
+    t.integer  "author_github_user_id",    null: false
+    t.datetime "author_date",              null: false
+    t.integer  "committer_github_user_id", null: false
+    t.datetime "committer_date",           null: false
+    t.integer  "push_id",                  null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+  end
+
+  create_table "github_users", force: :cascade do |t|
+    t.string   "username",   null: false
+    t.string   "email",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "parent_commits", force: :cascade do |t|
+    t.integer  "commit_id",  null: false
+    t.string   "sha",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "pushes", force: :cascade do |t|
     t.string   "payload"
     t.string   "ref"
     t.string   "head_commit"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "repo_id",     null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "repo_id",                           null: false
+    t.boolean  "commits_processed", default: false, null: false
   end
 
   create_table "repos", force: :cascade do |t|
+    t.integer  "user_id",           null: false
     t.text     "url",               null: false
     t.text     "hook"
     t.datetime "created_at",        null: false

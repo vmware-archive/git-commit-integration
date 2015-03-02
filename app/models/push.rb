@@ -5,15 +5,18 @@ class Push < ActiveRecord::Base
   validates_presence_of(:repo_id)
 
   def self.from_webhook(payload)
-    repo_github_identifier = payload.fetch('repository').fetch('id')
-    repo_id = Repo.find_by(github_identifier: repo_github_identifier).id
     self.new(
       {
-        repo_id: repo_id,
         payload: payload.to_json,
         ref: payload.fetch('ref'),
         head_commit: payload.fetch('head_commit').fetch('id')
       }
     )
+  end
+
+  def commits_hashes_from_payload
+    payload_hash = JSON.parse(payload)
+    commit_hashes = payload_hash.fetch('commits')
+    commit_hashes
   end
 end

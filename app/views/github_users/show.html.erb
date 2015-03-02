@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Username:</strong>
+  <%= @github_user.username %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @github_user.email %>
+</p>
+
+<%= link_to 'Edit', edit_github_user_path(@github_user) %> |
+<%= link_to 'Back', github_users_path %>

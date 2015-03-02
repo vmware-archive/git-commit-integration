@@ -2,15 +2,22 @@ class Repo < ActiveRecord::Base
   include GithubApiFactory
 
   has_many :pushes
+  belongs_to :user
+
   validates_presence_of :github_identifier
+  validates_presence_of   :user_id
 
   before_validation :set_github_identifier
 
-  attr_accessor :current_user # TODO: may need this if we ever need it in a separate thread: http://stackoverflow.com/questions/20881172/how-to-get-devises-current-user-in-activerecord-callback-in-rails
-
   def create_hook(request_original_url)
-    github = create_github_api_from_oauth_token(current_user)
+    github = create_github_api_from_oauth_token(self)
     github_user, github_repo = user_and_repo
+
+    begin
+      github.repos.hooks.list(github_user, github_repo)
+    rescue Github::Error::NotFound => e
+      raise CannotAccessWebhooksError.new("Cannot access github webhooks for repo #{github_user}/#{github_repo}.  Ensure user is an owner of the github repo.")
+    end
 
     req_uri = URI.parse(request_original_url)
     if Rails.env.development?
@@ -18,7 +25,7 @@ class Repo < ActiveRecord::Base
     else
       host_port = "#{req_uri.host}:#{req_uri.port}"
     end
-    webhook_url = "#{req_uri.scheme}://#{host_port}/pushes/receive"
+    webhook_url = "#{req_uri.scheme}://#{host_port}/repos/#{self.id}/pushes/receive"
 
     hook_config = {
       content_type: 'json',
@@ -39,7 +46,7 @@ class Repo < ActiveRecord::Base
   end
 
   def github_api_object
-    github = create_github_api_from_oauth_token(current_user)
+    github = create_github_api_from_oauth_token(self)
     github_user, github_repo = user_and_repo
     github.repos.get(github_user, github_repo)
   end

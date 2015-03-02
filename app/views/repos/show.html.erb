@@ -15,5 +15,9 @@
   <%= @repo.hook %>
 </p>
 
+<p>
+  <%= link_to '(re)create Webhook', repo_create_hook_path(id: @repo.id) %> (must be owner)
+</p>
+
 <%= link_to 'Edit', edit_repo_path(@repo) %> |
 <%= link_to 'Back', repos_path %>

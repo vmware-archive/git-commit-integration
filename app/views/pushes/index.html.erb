@@ -12,6 +12,7 @@
     <thead>
       <tr>
         <th>Subresources</th>
+        <th>Commits Processed?</th>
         <th>Repo ID</th>
         <th>Ref</th>
         <th>Head commit</th>
@@ -26,6 +27,7 @@
           <td>
             <%= link_to 'commits', repo_push_commits_path(push.repo_id, push) %>
           </td>
+          <td><%= push.commits_processed? %></td>
           <td><%= push.repo_id %></td>
           <td><%= push.ref %></td>
           <td><%= push.head_commit %></td>
