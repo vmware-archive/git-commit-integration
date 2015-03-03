@@ -2,5 +2,5 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @push %> |
-<%= link_to 'Back', pushes_path %>
+<%= link_to 'Show', repo_push_path(@push.repo, @push) %> |
+<%= link_to 'Back', repo_pushes_path(@push.repo) %>

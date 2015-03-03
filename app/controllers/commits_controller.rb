@@ -1,11 +1,13 @@
 class CommitsController < ApplicationController
   before_action :set_commit, only: [:show, :edit, :update, :destroy]
-  before_action :set_push, only: [:index]
+  before_action :set_repo
+  before_action :set_push, only: [:index, :new, :create]
 
   # GET /commits
   # GET /commits.json
   def index
-    @commits = @push ? Commit.where(push_id: @push.id) : Commit.all
+p '--------------- here'
+    @commits = @push ? Commit.where(push_id: @push.id) : Commit.joins(:push).where('pushes.repo_id' => @repo.id)
   end
 
   # GET /commits/1
@@ -15,7 +17,7 @@ class CommitsController < ApplicationController
 
   # GET /commits/new
   def new
-    @commit = Commit.new
+    @commit = @push.commits.build
   end
 
   # GET /commits/1/edit
@@ -25,7 +27,7 @@ class CommitsController < ApplicationController
   # POST /commits
   # POST /commits.json
   def create
-    @commit = Commit.new(commit_params)
+    @commit = @push.commits.build(commit_params)
 
     respond_to do |format|
       if @commit.save
@@ -57,7 +59,7 @@ class CommitsController < ApplicationController
   def destroy
     @commit.destroy
     respond_to do |format|
-      format.html { redirect_to commits_url, notice: 'Commit was successfully destroyed.' }
+      format.html { redirect_to repo_commits_url(@repo), notice: 'Commit was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -66,6 +68,10 @@ class CommitsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_commit
       @commit = Commit.find(params[:id])
+    end
+
+    def set_repo
+      @repo = Repo.find(params[:repo_id] || @commit.repo.id)
     end
 
     def set_push

@@ -1,5 +1,5 @@
 class Push < ActiveRecord::Base
-  has_many :commits
+  has_many :commits, dependent: :restrict_with_exception
   belongs_to :repo
 
   validates_presence_of(:repo_id)

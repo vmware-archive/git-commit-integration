@@ -1,12 +1,12 @@
 class PushesController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:receive]
   before_action :set_push, only: [:show, :edit, :update, :destroy]
-  before_action :set_repo, only: [:index, :receive]
+  before_action :set_repo
 
   # GET /pushes
   # GET /pushes.json
   def index
-    @pushes = @repo ? Push.where(repo_id: @repo.id) : Push.all
+    @pushes = Push.where(repo_id: @repo.id)
   end
 
   # GET /pushes/1
@@ -16,7 +16,7 @@ class PushesController < ApplicationController
 
   # GET /pushes/new
   def new
-    @push = Push.new
+    @push = @repo.pushes.build
   end
 
   # GET /pushes/1/edit
@@ -26,7 +26,7 @@ class PushesController < ApplicationController
   # POST /pushes
   # POST /pushes.json
   def create
-    @push = Push.new(push_params)
+    @push = @repo.pushes.build(push_params)
 
     respond_to do |format|
       if @push.save
@@ -58,7 +58,7 @@ class PushesController < ApplicationController
   def destroy
     @push.destroy
     respond_to do |format|
-      format.html { redirect_to pushes_url, notice: 'Push was successfully destroyed.' }
+      format.html { redirect_to repo_pushes_url(@repo), notice: 'Push was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -85,7 +85,7 @@ class PushesController < ApplicationController
   end
 
   def set_repo
-    @repo = Repo.find(params[:repo_id]) if params[:repo_id]
+    @repo = Repo.find(params.fetch(:repo_id))
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

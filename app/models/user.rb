@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :repos
+  has_many :repos, dependent: :restrict_with_exception
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

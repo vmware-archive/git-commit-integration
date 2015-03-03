@@ -16,6 +16,7 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Associate one or more External Links with a Repo
 * Display pushes for a specific repo
 * Display commits for a specific push
+* Display all commits for a repo
 * Display all branches for a repo (i.e. head refs: `curl -s https://api.github.com/repos/:owner/:repo/git/refs/heads`)
 * Display all commits which are currently or were previously on a given branch (ref)
 
@@ -56,6 +57,7 @@ Attributes:
 Associations:
 
 * `has_many :pushes`
+* `has_many :commits, through: :pushes`
 * `has_many :commits`
 * `has_many :refs` (auto-updated on every push)
 * `has_many :external_links, through: :repo_external_link`
@@ -106,6 +108,7 @@ Attributes:
 Associations:
 
 * `belongs_to :push`
+* `delegate :repo, :to => :push`
 * `belongs_to :author_github_user, :class_name => 'GithubUser', :foreign_key => 'author_github_user_id'`
 * `belongs_to :committer_github_user, :class_name => 'GithubUser', :foreign_key => 'committer_github_user_id'`
 * `has_many :parent_commits`

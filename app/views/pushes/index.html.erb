@@ -1,10 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>
-  Listing Pushes
-  <% if @repo %>
-    for Repo <%= @repo.url %>
-  <% end %>
+  Listing Pushes for Repo <%= @repo.url %>
 </h1>
 
 <div class="table-responsive">
@@ -36,9 +33,9 @@
               <%= push.payload %>
             </div>
           </td>
-          <td><%= link_to 'Show', push %></td>
-          <td><%= link_to 'Edit', edit_push_path(push) %></td>
-          <td><%= link_to 'Destroy', push, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Show', repo_push_path(push.repo, push) %></td>
+          <td><%= link_to 'Edit', edit_repo_push_path(push.repo, push) %></td>
+          <td><%= link_to 'Destroy', repo_push_path(push.repo, push), method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -47,4 +44,4 @@
 
 <br>
 
-<%= link_to 'New Push', new_push_path %>
+<%= link_to 'New Push', new_repo_push_path(@repo) %>

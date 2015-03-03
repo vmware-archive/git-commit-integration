@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Commits", type: :request do
-  describe "GET /commits" do
+  describe "GET /repos/:id/commits" do
     it "works! (now write some real specs)" do
-      get commits_path
-      expect(response).to have_http_status(200)
+      get repo_commits_path(create(:repo))
+      expect(response).to be_redirect # omniauth not mocked, no authentication
     end
   end
 end

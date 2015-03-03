@@ -1,7 +1,8 @@
 class Repo < ActiveRecord::Base
   include GithubApiFactory
 
-  has_many :pushes
+  has_many :pushes, dependent: :restrict_with_exception
+  has_many :commits, through: :pushes, dependent: :restrict_with_exception
   belongs_to :user
 
   validates_presence_of :github_identifier

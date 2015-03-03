@@ -5,6 +5,7 @@
   <% if @push %>
     for Push head_commit <%= @push.head_commit %>
   <% end %>
+  for Repo <%= @repo.url %>
 </h1>
 
 <div class="table-responsive">
@@ -52,4 +53,6 @@
 
 <br>
 
-<%= link_to 'New Commit', new_commit_path %>
+<% if @push %>
+  <%= link_to 'New Commit', new_repo_push_commit_path(@repo, @push) %>
+<% end %>

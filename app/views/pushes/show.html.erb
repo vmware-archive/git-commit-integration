@@ -25,5 +25,5 @@
   <%= @push.head_commit %>
 </p>
 
-<%= link_to 'Edit', edit_push_path(@push) %> |
-<%= link_to 'Back', pushes_path %>
+<%= link_to 'Edit', edit_repo_push_path(@push.repo, @push) %> |
+<%= link_to 'Back', repo_pushes_path(@push.repo) %>

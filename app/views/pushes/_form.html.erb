@@ -1,4 +1,4 @@
-<%= form_for(@push) do |f| %>
+<%= form_for([@repo, @push]) do |f| %>
   <% if @push.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@push.errors.count, "error") %> prohibited this push from being saved:</h2>
