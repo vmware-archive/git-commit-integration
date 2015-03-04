@@ -22,11 +22,12 @@
       <% @pushes.each do |push| %>
         <tr>
           <td>
-            <%= link_to 'commits', repo_push_commits_path(push.repo_id, push) %>
+            <p><%= link_to 'commits', repo_push_commits_path(push.repo_id, push) %></p>
+            <p><%= link_to 'ref', ref_path(push.ref_id) %></p>
           </td>
           <td><%= push.commits_processed? %></td>
           <td><%= push.repo_id %></td>
-          <td><%= push.ref %></td>
+          <td><%= push.ref.reference %></td>
           <td><%= push.head_commit %></td>
           <td>
             <div class="json">

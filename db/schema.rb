@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301230541) do
+ActiveRecord::Schema.define(version: 20150303142000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,12 +46,19 @@ ActiveRecord::Schema.define(version: 20150301230541) do
 
   create_table "pushes", force: :cascade do |t|
     t.string   "payload"
-    t.string   "ref"
     t.string   "head_commit"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.integer  "repo_id",                           null: false
     t.boolean  "commits_processed", default: false, null: false
+    t.integer  "ref_id",                            null: false
+  end
+
+  create_table "refs", force: :cascade do |t|
+    t.string   "reference"
+    t.integer  "repo_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "repos", force: :cascade do |t|

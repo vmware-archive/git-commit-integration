@@ -6,7 +6,6 @@ class CommitsController < ApplicationController
   # GET /commits
   # GET /commits.json
   def index
-p '--------------- here'
     @commits = @push ? Commit.where(push_id: @push.id) : Commit.joins(:push).where('pushes.repo_id' => @repo.id)
   end
 

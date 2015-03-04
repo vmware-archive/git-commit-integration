@@ -18,8 +18,9 @@
       <% @repos.each do |repo| %>
         <tr>
           <td>
-            <%= link_to 'pushes', repo_pushes_path(repo) %>
-            <%= link_to 'commits', repo_commits_path(repo) %>
+            <p><%= link_to 'pushes', repo_pushes_path(repo) %></p>
+            <p><%= link_to 'commits', repo_commits_path(repo) %></p>
+            <p><%= link_to 'refs', repo_refs_path(repo) %></p>
           </td>
           <td><%= repo.url %></td>
           <td><%= repo.github_identifier %></td>
@@ -31,7 +32,10 @@
           <td><%= link_to 'Show', repo %></td>
           <td><%= link_to 'Edit', edit_repo_path(repo) %></td>
           <td><%= link_to 'Destroy', repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <td><%= link_to '(re)create Webhook', repo_create_hook_path(id: repo.id) %> (must be owner)</td>
+          <td>
+            <p><%= link_to '(re)create Webhook', repo_create_hook_path(id: repo.id) %> (must be owner)</p>
+            <p><%= link_to 'view github webhooks', "https://github.com/#{repo.user_and_repo[0]}/#{repo.user_and_repo[1]}/settings/hooks" %></p>
+          </td>
         </tr>
       <% end %>
     </tbody>

@@ -66,9 +66,7 @@ class PushesController < ApplicationController
   def receive
     params.permit!
     begin
-      @push = Push.from_webhook(params.to_hash)
-      @push.repo = @repo
-      @push.save!
+      @push = Push.from_webhook(params.to_hash, @repo)
     rescue RuntimeError => e
       error_msg = "error when recieving webhook: #{e.inspect}"
       puts error_msg

@@ -80,12 +80,12 @@ Associations:
 Attributes:
 
 * **`payload`**: Github push event raw payload json object: https://developer.github.com/v3/activity/events/types/#pushevent
-* **`ref`**: The full Git ref that was pushed. Example: “refs/heads/master”
 * **`head_commit`**: SHA (id) of HEAD commit from push
 
 Associations:
 
 * `has_many :commits`
+* `belongs_to :ref` (points to the full Git ref that was pushed. Example: “refs/heads/master”
 * `belongs_to :repo`
 
 ### Commit
@@ -129,12 +129,11 @@ Associations:
 
 ### Ref
 
-Git ref.  just head refs, i.e. branches, to start with.  May add tags later.
+The full Git ref.  Just head refs, i.e. branches, to start with.  May add tags later.
 
 Attributes:
 
 * **`reference`**: The name of the fully qualified reference (i.e. `refs/heads/master`)
-* **`repo_id`**: ID of repo
 
 Associations:
 

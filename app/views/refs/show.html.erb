@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reference:</strong>
+  <%= @ref.reference %>
+</p>
+
+<p>
+  <strong>Repo:</strong>
+  <%= @ref.repo_id %>
+</p>
+
+<%= link_to 'Edit', edit_ref_path(@ref) %> |
+<%= link_to 'Back', repo_refs_path(@repo) %>
