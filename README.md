@@ -17,7 +17,8 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Display pushes for a specific repo
 * Display commits for a specific push
 * Display all commits for a repo
-* Display all branches for a repo (i.e. head refs: `curl -s https://api.github.com/repos/:owner/:repo/git/refs/heads`)
+* Display branches for a repo (i.e. head refs)
+  * initially just for pushed refs, eventually all can be pulled via: `curl -s https://api.github.com/repos/:owner/:repo/git/refs/heads`)
 * Display all commits which are currently or were previously on a given branch (ref)
 
 ### Killer Features
