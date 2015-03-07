@@ -244,8 +244,8 @@ Make sure it runs, and grab the NGROK_HOST to put in your .env.local (it shouldn
 
 ```
 ngrok 3000
-# grap the host, put in env.local
-# Ctrl C to kill it
+# grab the host (just host, not protocol or path), put in env.local
+# Ctrl C to kill it (it'll get run automatically by Foreman)
 ```
 
 ### Create dev env databases
@@ -263,7 +263,7 @@ bin/rake
 ### Running dev env server
 
 ```
-foreman start -f Procfile.local
+bin/foreman start -f Procfile.local
 ```
 
 * (Optional) go to localhost:4040 to verify your NGROK_HOST hasn't changed
