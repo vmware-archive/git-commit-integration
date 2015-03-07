@@ -303,7 +303,7 @@ To access repo object subresources (continuing from basic setup above):
 require 'github_api_factory'
 include GithubApiFactory
 github_user, github_repo = repo.user_and_repo
-github = create_github_api_from_oauth_token(repo.current_user)
+github = create_github_api_from_oauth_token(repo)
 github.repos.branches(github_user, github_repo).body.map{|branch| branch.name} # branches
 github.repos.commits.all(github_user, github_repo) # all commits on default branch (master)
 github.repos.commits.all(github_user, github_repo).first # first commit on default branch
