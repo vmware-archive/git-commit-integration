@@ -268,8 +268,9 @@ bin/foreman start -f Procfile.local
 
 * (Optional) go to localhost:4040 to verify your NGROK_HOST hasn't changed
 * Go to http://localhost:3000
+* Sign in with Github
 * Click to authorize app
-* Make a repo
+* Make a repo (pick one to which you have admin access to create webhooks)
 * Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
 * Verify the webhook looks right in github settings
 * Make a push to the repo (from a dummy branch if you don't want to clutter master): `echo "foo - $(date)." >> foo && git add foo && git commit -m "foo - $(date)" && git push`
