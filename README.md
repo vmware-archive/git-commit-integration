@@ -226,13 +226,6 @@ rm -rf /usr/local/var/postgres
 initdb /usr/local/var/postgres -E utf8
 ```
 
-### Running specs
-
-```
-bundle
-bin/rake
-```
-
 ### Setting up google oauth2 in development env
 
 * Make a github dev application: https://github.com/settings/applications
@@ -255,11 +248,21 @@ ngrok 3000
 # Ctrl C to kill it
 ```
 
-### Running dev env
+### Create dev env databases
 
 ```
 bundle
 bin/rake db:create:all
+
+### Running specs
+
+```
+bin/rake
+```
+
+### Running dev env server
+
+```
 foreman start -f Procfile.local
 ```
 
