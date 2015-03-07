@@ -253,6 +253,7 @@ ngrok 3000
 ```
 bundle
 bin/rake db:create:all
+```
 
 ### Running specs
 
