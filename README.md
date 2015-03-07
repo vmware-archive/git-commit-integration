@@ -272,7 +272,7 @@ bin/foreman start -f Procfile.local
 * Make a repo
 * Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
 * Verify the webhook looks right in github settings
-* Make a push to the repo (from a dummy branch if you don't want to clutter master): `echo "foo." >> foo && git add foo && git ci -m "foo" && git push`
+* Make a push to the repo (from a dummy branch if you don't want to clutter master): `echo "foo - $(date)." >> foo && git add foo && git commit -m "foo - $(date)" && git push`
 * Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.
 
 ### Running PWS prod env
