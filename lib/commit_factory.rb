@@ -36,7 +36,9 @@ class CommitFactory
       commit.committer_date = DateTime.parse(commit_api_object.committer.date)
 
       # obtain patch_identifier attribute
-      commit.patch_identifier = PatchIdGenerator.new.generate(github_user, github_repo, sha)
+      commit.patch_identifier = PatchIdGenerator.new.generate(
+        github_user, github_repo, sha, repo.user.github_app_token
+      )
 
       commit.save!
 
