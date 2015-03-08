@@ -17,7 +17,7 @@ class CommitFactory
       commit_api_object = commit_api_response.commit
       commit.data = commit_api_object.to_hash.to_json
       commit.message = commit_api_object.message
-      commit.sha= commit_api_response.sha
+      commit.sha= sha
 
       # create associated objects
       author = GithubUser.find_or_create_by!(
@@ -38,9 +38,8 @@ class CommitFactory
       commit.committer_github_user = committer
       commit.committer_date = DateTime.parse(commit_api_object.committer.date)
 
-      # obtain patch_id attribute
-      # TODO: ...
-      commit.patch_id = 'TODO'
+      # obtain patch_identifier attribute
+      commit.patch_identifier = PatchIdGenerator.new.generate(github_user, github_repo, sha)
 
       commit.save!
       # create parent commits
