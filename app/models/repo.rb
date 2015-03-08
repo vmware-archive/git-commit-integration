@@ -6,7 +6,7 @@ class Repo < ActiveRecord::Base
   belongs_to :user
 
   validates_presence_of :github_identifier
-  validates_presence_of   :user_id
+  validates_presence_of :user_id
 
   before_validation :set_github_identifier
 
@@ -39,7 +39,7 @@ class Repo < ActiveRecord::Base
       response = do_create_hook(github, hook_config)
     rescue Github::Error::UnprocessableEntity => e
       p "Error creating hook: #{e.inspect}.  Attempting to delete and recreate web hook for #{webhook_url}"
-      existing_hook_id = github.repos.hooks.list(github_user, github_repo).detect{|h| h.config.url == webhook_url}.id
+      existing_hook_id = github.repos.hooks.list(github_user, github_repo).detect { |h| h.config.url == webhook_url }.id
       github.repos.hooks.delete(github_user, github_repo, existing_hook_id)
       response = do_create_hook(github, hook_config)
     end

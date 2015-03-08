@@ -7,51 +7,52 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id="main-container" class="container-fluid">
-    <div class="row header">
-      <div class="col-xs-5">
-        <div class="row">
-          <h1><%= link_to "Git Commit Integration", root_path, data: { no_turbolink: true } %></h1>
-        </div>
-        <div class="row">
-          <a href="https://www.pivotaltracker.com/n/projects/1286262">Project Backlog on Pivotal Tracker</a> -
-          <a href="https://github.com/pivotaltracker/git-commit-integration">Source Code on Github</a>
-        </div>
+<div id="main-container" class="container-fluid">
+  <div class="row header">
+    <div class="col-xs-5">
+      <div class="row">
+        <h1><%= link_to "Git Commit Integration", root_path, data: {no_turbolink: true} %></h1>
       </div>
-      <div class="col-xs-4">
-        <div class="row">
-          <p class="disclaimer">WARNING: This app is a spike/proof of concept.  It is not TDD'd, does not handle
-          errors, and may be insecure.  Use with sensitive data or accounts at your own risk.</p>
-        </div>
-        <div class="row">
-          <% if notice %>
-            <p class="alert-info"><%= notice %></p>
-          <% end %>
-        </div>
-        <div class="row">
-          <% if alert %>
-            <p class="alert-warning"><%= alert %></p>
-          <% end %>
-        </div>
+      <div class="row">
+        <a href="https://www.pivotaltracker.com/n/projects/1286262">Project Backlog on Pivotal Tracker</a> -
+        <a href="https://github.com/pivotaltracker/git-commit-integration">Source Code on Github</a>
       </div>
-      <div class="col-xs-3">
-        <% if user_signed_in? %>
-          <%= current_user.email %> - <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-        <% else %>
-          <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure this page is https before clicking)
+    </div>
+    <div class="col-xs-4">
+      <div class="row">
+        <p class="disclaimer">WARNING: This app is a spike/proof of concept. It is not TDD'd, does not handle
+          errors, and may be insecure. Use with sensitive data or accounts at your own risk.</p>
+      </div>
+      <div class="row">
+        <% if notice %>
+          <p class="alert-info"><%= notice %></p>
+        <% end %>
+      </div>
+      <div class="row">
+        <% if alert %>
+          <p class="alert-warning"><%= alert %></p>
         <% end %>
       </div>
     </div>
-    <div class="row">
-      <div id="sidebar" class="col-xs-2">
-        <%= render "shared/menu" %>
-      </div>
-      <div id="main-content" class="col-xs-10">
-        <%= yield %>
-      </div>
-    </div>
-    <div class="row footer">
+    <div class="col-xs-3">
+      <% if user_signed_in? %>
+        <%= current_user.email %> - <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure
+        this page is https before clicking)
+      <% end %>
     </div>
   </div>
+  <div class="row">
+    <div id="sidebar" class="col-xs-2">
+      <%= render "shared/menu" %>
+    </div>
+    <div id="main-content" class="col-xs-10">
+      <%= yield %>
+    </div>
+  </div>
+  <div class="row footer">
+  </div>
+</div>
 </body>
 </html>

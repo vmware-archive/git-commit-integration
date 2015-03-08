@@ -68,13 +68,13 @@ class ReposController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_repo
-      @repo = Repo.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_repo
+    @repo = Repo.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def repo_params
-      params.require(:repo).permit(:url, :hook)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def repo_params
+    params.require(:repo).permit(:url, :hook)
+  end
 end

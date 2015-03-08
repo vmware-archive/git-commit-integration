@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:github]
 
-  validates_presence_of   :email
+  validates_presence_of :email
   validates_uniqueness_of :email, allow_blank: false, if: :email_changed?
 
   def self.find_for_github(auth)

@@ -4,9 +4,9 @@
       <h2><%= pluralize(@commit.errors.count, "error") %> prohibited this commit from being saved:</h2>
 
       <ul>
-      <% @commit.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @commit.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

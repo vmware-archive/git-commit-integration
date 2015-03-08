@@ -64,23 +64,23 @@ class RefsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ref
-      @ref = Ref.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ref
+    @ref = Ref.find(params[:id])
+  end
 
-    def set_commit
-      @commit = Commit.find(params[:commit_id]) if params[:commit_id]
-    end
+  def set_commit
+    @commit = Commit.find(params[:commit_id]) if params[:commit_id]
+  end
 
-    def set_repo
-      @repo = Repo.find(params[:repo_id]) if params[:repo_id]
-      @repo ||= @commit.repo if @commit
-      @repo ||= @ref.repo.id
-    end
+  def set_repo
+    @repo = Repo.find(params[:repo_id]) if params[:repo_id]
+    @repo ||= @commit.repo if @commit
+    @repo ||= @ref.repo.id
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ref_params
-      params.require(:ref).permit(:reference, :repo_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ref_params
+    params.require(:ref).permit(:reference, :repo_id)
+  end
 end

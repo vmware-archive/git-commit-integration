@@ -4,9 +4,9 @@
       <h2><%= pluralize(@ref.errors.count, "error") %> prohibited this ref from being saved:</h2>
 
       <ul>
-      <% @ref.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @ref.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

@@ -4,9 +4,9 @@
       <h2><%= pluralize(@repo.errors.count, "error") %> prohibited this repo from being saved:</h2>
 
       <ul>
-      <% @repo.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @repo.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

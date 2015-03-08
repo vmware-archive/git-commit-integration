@@ -62,13 +62,13 @@ class ParentCommitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_parent_commit
-      @parent_commit = ParentCommit.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_parent_commit
+    @parent_commit = ParentCommit.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def parent_commit_params
-      params.require(:parent_commit).permit(:commit_id, :sha)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def parent_commit_params
+    params.require(:parent_commit).permit(:commit_id, :sha)
+  end
 end

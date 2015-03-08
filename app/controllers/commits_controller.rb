@@ -73,28 +73,28 @@ class CommitsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_commit
-      @commit = Commit.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_commit
+    @commit = Commit.find(params[:id])
+  end
 
-    def set_ref
-      @ref = Ref.find(params[:ref_id]) if params[:ref_id]
-    end
+  def set_ref
+    @ref = Ref.find(params[:ref_id]) if params[:ref_id]
+  end
 
-    def set_push
-      @push = Push.find(params[:push_id]) if params[:push_id]
-    end
+  def set_push
+    @push = Push.find(params[:push_id]) if params[:push_id]
+  end
 
-    def set_repo
-      repo_id = params[:repo_id]
-      repo_id ||= @ref.repo.id if @ref
-      repo_id ||= @commit.repo.id
-      @repo = Repo.find(repo_id)
-    end
+  def set_repo
+    repo_id = params[:repo_id]
+    repo_id ||= @ref.repo.id if @ref
+    repo_id ||= @commit.repo.id
+    @repo = Repo.find(repo_id)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def commit_params
-      params.require(:commit).permit(:data, :sha, :patch_identifier, :message, :author_github_user_id, :author_date, :committer_github_user_id, :committer_date)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def commit_params
+    params.require(:commit).permit(:data, :sha, :patch_identifier, :message, :author_github_user_id, :author_date, :committer_github_user_id, :committer_date)
+  end
 end

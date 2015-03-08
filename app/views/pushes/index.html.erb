@@ -11,38 +11,39 @@
 <div class="table-responsive">
   <table class="table">
     <thead>
-      <tr>
-        <th>Associated Resources</th>
-        <th>Commits Processed?</th>
-        <th>Repo ID</th>
-        <th>Ref</th>
-        <th>Head commit</th>
-        <th>Payload</th>
-        <th colspan="3"></th>
-      </tr>
+    <tr>
+      <th>Associated Resources</th>
+      <th>Commits Processed?</th>
+      <th>Repo ID</th>
+      <th>Ref</th>
+      <th>Head commit</th>
+      <th>Payload</th>
+      <th colspan="3"></th>
+    </tr>
     </thead>
 
     <tbody>
-      <% @pushes.each do |push| %>
-        <tr>
-          <td>
-            <p><%= link_to 'commits', repo_push_commits_path(push.repo_id, push) %></p>
-            <p><%= link_to 'ref', ref_path(push.ref_id) %></p>
-          </td>
-          <td><%= push.commits_processed? %></td>
-          <td><%= push.repo_id %></td>
-          <td><%= push.ref.reference %></td>
-          <td><%= push.head_commit %></td>
-          <td>
-            <div class="json">
-              <%= push.payload %>
-            </div>
-          </td>
-          <td><%= link_to 'Show', repo_push_path(push.repo, push) %></td>
-          <td><%= link_to 'Edit', edit_repo_push_path(push.repo, push) %></td>
-          <td><%= link_to 'Destroy', repo_push_path(push.repo, push), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
+    <% @pushes.each do |push| %>
+      <tr>
+        <td>
+          <p><%= link_to 'commits', repo_push_commits_path(push.repo_id, push) %></p>
+
+          <p><%= link_to 'ref', ref_path(push.ref_id) %></p>
+        </td>
+        <td><%= push.commits_processed? %></td>
+        <td><%= push.repo_id %></td>
+        <td><%= push.ref.reference %></td>
+        <td><%= push.head_commit %></td>
+        <td>
+          <div class="json">
+            <%= push.payload %>
+          </div>
+        </td>
+        <td><%= link_to 'Show', repo_push_path(push.repo, push) %></td>
+        <td><%= link_to 'Edit', edit_repo_push_path(push.repo, push) %></td>
+        <td><%= link_to 'Destroy', repo_push_path(push.repo, push), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
 </div>

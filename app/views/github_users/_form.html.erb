@@ -4,9 +4,9 @@
       <h2><%= pluralize(@github_user.errors.count, "error") %> prohibited this github_user from being saved:</h2>
 
       <ul>
-      <% @github_user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @github_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>

@@ -62,13 +62,13 @@ class GithubUsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_github_user
-      @github_user = GithubUser.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_github_user
+    @github_user = GithubUser.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def github_user_params
-      params.require(:github_user).permit(:username, :email)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def github_user_params
+    params.require(:github_user).permit(:username, :email)
+  end
 end
