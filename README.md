@@ -86,7 +86,7 @@ Attributes:
 Associations:
 
 * `has_many :commits`
-* `belongs_to :ref` (points to the full Git ref that was pushed. Example: “refs/heads/master”
+* `belongs_to :ref` (points to the full Git ref that was pushed. Example: "refs/heads/master")
 * `belongs_to :repo`
 
 ### Commit
@@ -138,6 +138,8 @@ Attributes:
 
 Associations:
 
+* `has_many :pushes`
+* `has_many :commits through: :pushes`
 * `belongs_to :repo`
 
 ### RefCommits

@@ -1,7 +1,8 @@
 class CommitsController < ApplicationController
   before_action :set_commit, only: [:show, :edit, :update, :destroy]
-  before_action :set_repo
+  before_action :set_ref, only: [:index]
   before_action :set_push, only: [:index, :new, :create]
+  before_action :set_repo
 
   # GET /commits
   # GET /commits.json
@@ -69,12 +70,19 @@ class CommitsController < ApplicationController
       @commit = Commit.find(params[:id])
     end
 
-    def set_repo
-      @repo = Repo.find(params[:repo_id] || @commit.repo.id)
+    def set_ref
+      @ref = Ref.find(params[:ref_id]) if params[:ref_id]
     end
 
     def set_push
       @push = Push.find(params[:push_id]) if params[:push_id]
+    end
+
+    def set_repo
+      repo_id = params[:repo_id]
+      repo_id ||= @ref.repo.id if @ref
+      repo_id ||= @commit.repo.id
+      @repo = Repo.find(repo_id)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

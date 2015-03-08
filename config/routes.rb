@@ -23,6 +23,9 @@ Rails.application.routes.draw do
       resources :commits, only: [:index]
       resources :refs, shallow: true
     end
+    resources :refs, only: [] do
+      resources :commits, only: [:index]
+    end
     get 'repos/:id/create_hook', to: 'repos#create_hook', as: :repo_create_hook
   end
 

@@ -14,7 +14,7 @@ class Push < ActiveRecord::Base
       repo_id: repo.id,
       head_commit: payload.fetch('head_commit').fetch('id')
     }
-p attrs
+
     push = Push.new(
       attrs
     )

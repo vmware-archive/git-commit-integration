@@ -2,6 +2,9 @@
 
 <h1>
   Listing Commits
+  <% if @ref %>
+    for Ref <%= @ref.reference %>
+  <% end %>
   <% if @push %>
     for Push head_commit <%= @push.head_commit %>
   <% end %>
