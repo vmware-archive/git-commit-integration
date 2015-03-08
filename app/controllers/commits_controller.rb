@@ -7,7 +7,15 @@ class CommitsController < ApplicationController
   # GET /commits
   # GET /commits.json
   def index
-    @commits = @push ? @push.commits : Commit.where(repo_id: @repo.id)
+    @commits =
+      case
+        when @ref
+          @ref.commits
+        when @push
+          @push.commits
+        else
+          Commit.where(repo_id: @repo.id)
+      end
   end
 
   # GET /commits/1
