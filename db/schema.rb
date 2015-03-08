@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307020000) do
+ActiveRecord::Schema.define(version: 20150308182419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20150307020000) do
   create_table "commits", force: :cascade do |t|
     t.string   "data",                     null: false
     t.string   "sha",                      null: false
-    t.string   "patch_identifier",         null: false
+    t.string   "patch_identifier"
     t.string   "message",                  null: false
     t.integer  "author_github_user_id",    null: false
     t.datetime "author_date",              null: false

@@ -35,16 +35,23 @@ class CommitFactory
       commit.committer_github_user = committer
       commit.committer_date = DateTime.parse(commit_api_object.committer.date)
 
-      # obtain patch_identifier attribute
-      commit.patch_identifier = PatchIdGenerator.new.generate(
-        github_user, github_repo, sha, repo.user.github_app_token
-      )
-
       commit.save!
 
       # create parent commits
       commit_api_response.parents.each do |parent|
         commit.parent_commits.create!(sha: parent.sha)
+      end
+      
+      if commit.parent_commits.size == 1
+        # obtain patch_identifier attribute
+        patch_identifier = PatchIdGenerator.new.generate(
+          github_user, github_repo, sha, repo.user.github_app_token
+        )
+        commit.update_attributes!(patch_identifier: patch_identifier)
+      else
+        puts "Skipping patch-id generation for commit #{commit.id} " \
+          "on repo #{repo.id} with SHA #{commit.sha}, because it has" \
+          "more than one parent and is therefore a merge commit."
       end
 
       # create ref and association if they don't yet exist
