@@ -1,12 +1,13 @@
 class PushesController < ApplicationController
   skip_before_filter :verify_authenticity_token, only: [:receive]
   before_action :set_push, only: [:show, :edit, :update, :destroy]
+  before_action :set_commit, only: [:index]
   before_action :set_repo
 
   # GET /pushes
   # GET /pushes.json
   def index
-    @pushes = Push.where(repo_id: @repo.id)
+    @pushes = @commit ? @commit.pushes : Push.where(repo_id: @repo.id)
   end
 
   # GET /pushes/1
@@ -82,8 +83,12 @@ class PushesController < ApplicationController
     @push = Push.find(params[:id])
   end
 
+  def set_commit
+    @commit = Commit.find(params[:commit_id]) if params[:commit_id]
+  end
+
   def set_repo
-    @repo = Repo.find(params.fetch(:repo_id))
+    @repo = @commit ? @commit.repo : Repo.find(params.fetch(:repo_id))
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

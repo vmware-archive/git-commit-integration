@@ -85,7 +85,7 @@ Attributes:
 
 Associations:
 
-* `has_many :commits`
+* `has_many :commits, through: :push_commits`
 * `belongs_to :ref` (points to the full Git ref that was pushed. Example: "refs/heads/master")
 * `belongs_to :repo`
 
@@ -108,7 +108,8 @@ Attributes:
 
 Associations:
 
-* `belongs_to :push`
+* `has_many :pushes, through: :push_commits`
+* `has_many :refs, through: :ref_commits`
 * `delegate :repo, :to => :push`
 * `belongs_to :author_github_user, :class_name => 'GithubUser', :foreign_key => 'author_github_user_id'`
 * `belongs_to :committer_github_user, :class_name => 'GithubUser', :foreign_key => 'committer_github_user_id'`
@@ -139,7 +140,7 @@ Attributes:
 Associations:
 
 * `has_many :pushes`
-* `has_many :commits through: :pushes`
+* `has_many :commits, through: :ref_commits`
 * `belongs_to :repo`
 
 ### RefCommits
@@ -154,6 +155,15 @@ Attributes:
 Associations:
 
 * `belongs_to :ref`
+* `belongs_to :commit`
+
+### PushCommits
+
+Association table between pushes and commits.
+
+Associations:
+
+* `belongs_to :push`
 * `belongs_to :commit`
 
 ### ExternalLink

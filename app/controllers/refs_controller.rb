@@ -1,11 +1,12 @@
 class RefsController < ApplicationController
   before_action :set_ref, only: [:show, :edit, :update, :destroy]
+  before_action :set_commit, only: [:index]
   before_action :set_repo
 
   # GET /refs
   # GET /refs.json
   def index
-    @refs = Ref.where(repo_id: @repo.id)
+    @refs = @commit ? @commit.refs : Ref.where(repo_id: @repo.id)
   end
 
   # GET /refs/1
@@ -68,8 +69,14 @@ class RefsController < ApplicationController
       @ref = Ref.find(params[:id])
     end
 
+    def set_commit
+      @commit = Commit.find(params[:commit_id]) if params[:commit_id]
+    end
+
     def set_repo
-      @repo = Repo.find(params[:repo_id] || @ref.repo.id)
+      @repo = Repo.find(params[:repo_id]) if params[:repo_id]
+      @repo ||= @commit.repo if @commit
+      @repo ||= @ref.repo.id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,7 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <h1>
-  Listing Pushes for Repo <%= @repo.url %>
+  Listing Pushes
+  <% if @commit %>
+    for Commit <%= @commit.sha %>
+  <% end %>
+  for Repo <%= @repo.url %>
 </h1>
 
 <div class="table-responsive">

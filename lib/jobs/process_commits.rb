@@ -7,7 +7,7 @@ class ProcessCommits
     pushes.each do |push|
       ActiveRecord::Base.transaction do
         push.commits_hashes_from_payload.each do |push_commit_hash|
-          CommitFactory.new.create(push_commit_hash.fetch('id'),push.id)
+          CommitFactory.new.create(push_commit_hash.fetch('id'),push.repo, push.ref.reference, true, push)
           commit_count += 1
         end
         push.update_attributes!(commits_processed: true)

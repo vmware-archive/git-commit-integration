@@ -1,9 +1,11 @@
 class Push < ActiveRecord::Base
-  has_many :commits, dependent: :restrict_with_exception
+  has_many :push_commits, dependent: :restrict_with_exception
+  has_many :commits, through: :push_commits, dependent: :restrict_with_exception
   belongs_to :ref
   belongs_to :repo
 
   validates_presence_of(:repo_id)
+  validates_presence_of(:ref_id)
 
   def self.from_webhook(payload, repo)
     reference = payload.fetch('ref')

@@ -40,10 +40,4 @@
   <%= @commit.committer_date %>
 </p>
 
-<p>
-  <strong>Push:</strong>
-  <%= @commit.push_id %>
-</p>
-
 <%= link_to 'Edit', edit_commit_path(@commit) %> |
-<%= link_to 'Back', repo_push_commits_path(@repo, @commit.push) %>
