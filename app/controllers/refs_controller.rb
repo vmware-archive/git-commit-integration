@@ -57,7 +57,7 @@ class RefsController < ApplicationController
   def destroy
     @ref.destroy
     respond_to do |format|
-      format.html { redirect_to repo_refs_url, notice: 'Ref was successfully destroyed.' }
+      format.html { redirect_to repo_refs_url(@repo), notice: 'Ref was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

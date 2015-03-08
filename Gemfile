@@ -46,6 +46,8 @@ gem 'github_api'
 
 gem 'clockwork'
 
+gem 'process_helper', git: 'git@github.com:oppegard/process_helper.git'
+
 group :production do
   gem 'rails_12factor'
 end

@@ -14,8 +14,7 @@
       <tr>
         <th>Data</th>
         <th>Sha</th>
-        <th>Parent sha</th>
-        <th>Patch</th>
+        <th>Patch Id</th>
         <th>Message</th>
         <th>Author github user</th>
         <th>Author date</th>
@@ -35,7 +34,7 @@
             </div>
           </td>
           <td><%= commit.sha %></td>
-          <td><%= commit.patch_id %></td>
+          <td><%= commit.patch_identifier %></td>
           <td><%= commit.message %></td>
           <td><%= commit.author_github_user_id %></td>
           <td><%= commit.author_date %></td>

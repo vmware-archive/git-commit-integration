@@ -95,7 +95,7 @@ Attributes:
 
 * **`data`**: Github commit object json
 * **`sha`**: SHA of commit
-* **`patch_id`**: patch-id of commit
+* **`patch_identifier`**: patch-id of commit
   * http://git-scm.com/docs/git-patch-id
   * http://git-scm.com/book/en/v2/Git-Branching-Rebasing#Rebase-When-You-Rebase
   * `curl -H "Accept: application/vnd.github.v3.patch" -s https://api.github.com/repos/:user/:repo/commits/:sha | git patch-id --stable`

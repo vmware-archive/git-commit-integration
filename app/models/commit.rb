@@ -7,5 +7,5 @@ class Commit < ActiveRecord::Base
   delegate :repo, :to => :push
 
   validates_presence_of :author_date, :author_github_user_id, :committer_date, :committer_github_user_id, :data,
-    :message, :patch_id, :push_id, :sha
+    :message, :patch_identifier, :push_id, :sha
 end
