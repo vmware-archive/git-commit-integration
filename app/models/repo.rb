@@ -17,7 +17,10 @@ class Repo < ActiveRecord::Base
     begin
       github.repos.hooks.list(github_user, github_repo)
     rescue Github::Error::NotFound => e
-      raise CannotAccessWebhooksError.new("Cannot access github webhooks for repo #{github_user}/#{github_repo}.  Ensure user is an owner of the github repo.")
+      raise CannotAccessWebhooksError.new(
+          "[gci] #{DateTime.now.utc.iso8601} Cannot access github webhooks for repo " \
+            "#{github_user}/#{github_repo}.  Ensure user is an owner of the github repo."
+        )
     end
 
     req_uri = URI.parse(request_original_url)
@@ -38,7 +41,8 @@ class Repo < ActiveRecord::Base
     begin
       response = do_create_hook(github, hook_config)
     rescue Github::Error::UnprocessableEntity => e
-      p "Error creating hook: #{e.inspect}.  Attempting to delete and recreate web hook for #{webhook_url}"
+      puts "[gci] #{DateTime.now.utc.iso8601} Error creating hook: #{e.inspect}. " \
+        "Attempting to delete and recreate web hook for #{webhook_url}"
       existing_hook_id = github.repos.hooks.list(github_user, github_repo).detect { |h| h.config.url == webhook_url }.id
       github.repos.hooks.delete(github_user, github_repo, existing_hook_id)
       response = do_create_hook(github, hook_config)

@@ -10,17 +10,20 @@ class Push < ActiveRecord::Base
   def self.from_webhook(payload, repo)
     reference = payload.fetch('ref')
     ref = Ref.create_with(repo: repo).find_or_create_by(reference: reference)
-    attrs = {
-      payload: payload.to_json,
-      ref_id: ref.id,
-      repo_id: repo.id,
-      head_commit: payload.fetch('head_commit').fetch('id')
-    }
+    head_commit = payload.fetch('head_commit').fetch('id')
+    unless push = Push.find_by(ref_id: ref.id, head_commit: head_commit)
+      attrs = {
+        payload: payload.to_json,
+        ref_id: ref.id,
+        repo_id: repo.id,
+        head_commit: head_commit
+      }
 
-    push = Push.new(
-      attrs
-    )
-    push.save!
+      push = Push.new(
+        attrs
+      )
+      push.save!
+    end
     push
   end
 

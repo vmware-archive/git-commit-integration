@@ -1,5 +1,5 @@
 class MissingGithubAppTokenError < RuntimeError
   def message
-    'App must be authorized first...'
+    "[gci] #{DateTime.now.utc.iso8601} App must be authorized first..."
   end
 end

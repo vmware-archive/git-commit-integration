@@ -1,7 +1,7 @@
 class ProcessCommits
   def process
     return if ENV['DISABLE_PROCESS_COMMITS'] == 'true'
-    puts "#{DateTime.now.utc.iso8601} [Clockwork ProcessCommits] Started Running"
+    puts "[gci] #{DateTime.now.utc.iso8601} Clockwork ProcessCommits Started Running"
     pushes = Push.where(commits_processed: false)
     commit_count = 0
     pushes.each do |push|
@@ -14,6 +14,6 @@ class ProcessCommits
       end
     end
 
-    puts "#{DateTime.now.utc.iso8601} [Clockwork ProcessCommits] Finished Running, processed #{pushes.size} pushes and #{commit_count} commits."
+    puts "[gci] #{DateTime.now.utc.iso8601} Clockwork ProcessCommits Finished Running, processed #{pushes.size} pushes and #{commit_count} commits."
   end
 end

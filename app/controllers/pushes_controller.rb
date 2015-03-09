@@ -67,9 +67,11 @@ class PushesController < ApplicationController
   def receive
     params.permit!
     begin
-      @push = Push.from_webhook(params.to_hash, @repo)
+      unless params.to_hash['zen'] # skip initial test ping webhook
+        Push.from_webhook(params.to_hash, @repo)
+      end
     rescue RuntimeError => e
-      error_msg = "error when recieving webhook: #{e.inspect}"
+      error_msg = "[gci] #{DateTime.now.utc.iso8601} Error when recieving webhook: #{e.inspect}"
       puts error_msg
       render json: {'error_msg' => error_msg} and return
     end

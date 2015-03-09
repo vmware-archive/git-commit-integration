@@ -22,14 +22,14 @@ class PatchIdGenerator
 
     patch_text = response.body
     unless patch_text =~ /^From [0-9a-f]+ /
-      raise "Invalid patch_text retrieved.  " \
+      raise "[gci] #{DateTime.now.utc.iso8601} Invalid patch_text retrieved.  " \
           "Run curl command and verify it: `#{curl_cmd}`.  Patch text:\n\n#{patch_text}"
     end
 
     patch_identifier_text = process("echo '#{patch_text}' | git patch-id --stable")
 
     unless patch_identifier_text =~ /^[0-9a-f]+ #{sha}$/
-      raise "Invalid patch_identifier retrieved.  " \
+      raise "[gci] #{DateTime.now.utc.iso8601} Invalid patch_identifier retrieved.  " \
           "Run curl command and pipe to 'git patch-id --stable' verify it: `#{curl_cmd} | git patch-id --stable`"
     end
 

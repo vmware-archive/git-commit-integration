@@ -276,7 +276,11 @@ bin/rake
 ### Running dev env server
 
 ```
-bin/foreman start -f Procfile.local
+# everything goes to stdout (12-factor app)
+bin/foreman start -f Procfile.local | tee /tmp/gci.log
+
+# filter out app logs in another window:
+tail -f /tmp/gci.log | grep '\[gci\]'
 ```
 
 * (Optional) go to localhost:4040 to verify your NGROK_HOST hasn't changed
@@ -323,6 +327,10 @@ github.repos.commits.all(github_user, github_repo).first # first commit on defau
 github.repos.commits.all(github_user, github_repo, sha: 'some sha').first.commit.message  # get all commits then message of first
 github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').sha # find a commit then get its sha
 github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').commit.message  # find a commit then get its message
+github.git.references.list(github_user, github_repo) # list all refs for a repo
+github.git.references.get(github_user, github_repo, 'heads/dummybranch') # get a single ref
+github.git.references.get(github_user, github_repo, 'heads/dummybranch').object.sha # get the latest sha (commit) on a ref
+github.repos.commits.list(github_user, github_repo, sha: '7497993e5a0ab3d95f491ac2b7944e43487c5570') # list all commits on a ref or branch starting at sha
 ```
 
 See https://developer.github.com/v3/repos/commits/ for commits structure

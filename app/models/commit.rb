@@ -3,10 +3,13 @@ class Commit < ActiveRecord::Base
   has_many :pushes, through: :push_commits
   has_many :ref_commits
   has_many :refs, through: :ref_commits
-  belongs_to :author_github_user, :class_name => 'GithubUser', :foreign_key => 'author_github_user_id'
-  belongs_to :committer_github_user, :class_name => 'GithubUser', :foreign_key => 'committer_github_user_id'
+  belongs_to :author_github_user, class_name: 'GithubUser', foreign_key: 'author_github_user_id'
+  belongs_to :committer_github_user, class_name: 'GithubUser', foreign_key: 'committer_github_user_id'
   belongs_to :repo
-  has_many :parent_commits, dependent: :destroy
+  has_many :parent_commits, foreign_key: 'child_commit_id', dependent: :restrict_with_exception
+  has_many :child_commits, class_name: 'ParentCommit', foreign_key: 'commit_id', dependent: :restrict_with_exception
+  has_many :parents, through: :parent_commits, source: :commit, dependent: :restrict_with_exception
+  has_many :children, through: :child_commits, source: :child_commit, dependent: :restrict_with_exception
 
   # TODO: patch_identifier currently not populated for merge commits.
   #       See https://www.pivotaltracker.com/story/show/89873776
@@ -15,6 +18,7 @@ class Commit < ActiveRecord::Base
 
   validates_presence_of :author_date, :author_github_user_id, :committer_date, :committer_github_user_id, :data,
     :message, :sha
+  validates_uniqueness_of :sha, scope: :repo, allow_blank: false
 
   def exists_on_ref?(ref)
     ref_commit = self.ref_commits.where(ref: ref)
