@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308200000) do
+ActiveRecord::Schema.define(version: 20150310060000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,32 @@ ActiveRecord::Schema.define(version: 20150308200000) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "repo_id",                  null: false
+  end
+
+  create_table "external_link_commits", force: :cascade do |t|
+    t.integer  "external_link_id"
+    t.integer  "commit_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "external_id",      null: false
+    t.string   "external_uri",     null: false
+  end
+
+  create_table "external_link_repos", force: :cascade do |t|
+    t.integer  "external_link_id"
+    t.integer  "repo_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "external_links", force: :cascade do |t|
+    t.string   "description"
+    t.string   "extract_pattern"
+    t.string   "uri_template"
+    t.string   "replace_pattern"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.datetime "commits_processed_thru"
   end
 
   create_table "github_users", force: :cascade do |t|

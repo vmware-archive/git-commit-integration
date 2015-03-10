@@ -1,0 +1,25 @@
+<%= form_for(@external_link_repo) do |f| %>
+  <% if @external_link_repo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@external_link_repo.errors.count, "error") %> prohibited this external_link_repo from being saved:</h2>
+
+      <ul>
+      <% @external_link_repo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :external_link_id %><br>
+    <%= f.number_field :external_link_id %>
+  </div>
+  <div class="field">
+    <%= f.label :repo_id %><br>
+    <%= f.number_field :repo_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

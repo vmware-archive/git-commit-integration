@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @external_link.description %>
+</p>
+
+<p>
+  <strong>Extract pattern:</strong>
+  <%= @external_link.extract_pattern %>
+</p>
+
+<p>
+  <strong>Uri template:</strong>
+  <%= @external_link.uri_template %>
+</p>
+
+<p>
+  <strong>Replace pattern:</strong>
+  <%= @external_link.replace_pattern %>
+</p>
+
+<p>
+  <strong>Commits Processed Thru:</strong>
+  <%= @external_link.commits_processed_thru %>
+</p>
+
+<%= link_to 'Edit', edit_external_link_path(@external_link) %> |
+<%= link_to 'Back', external_links_path %>

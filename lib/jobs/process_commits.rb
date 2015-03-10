@@ -14,6 +14,7 @@ class ProcessCommits
       end
     end
 
-    puts "[gci] #{DateTime.now.utc.iso8601} Clockwork ProcessCommits Finished Running, processed #{pushes.size} pushes and #{commit_count} commits."
+    puts "[gci] #{DateTime.now.utc.iso8601} Clockwork ProcessCommits Finished Running, " \
+      "processed #{pushes.size} pushes and #{commit_count} commits."
   end
 end

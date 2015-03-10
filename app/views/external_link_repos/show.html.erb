@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>External link:</strong>
+  <%= @external_link_repo.external_link_id %>
+</p>
+
+<p>
+  <strong>Repo:</strong>
+  <%= @external_link_repo.repo_id %>
+</p>
+
+<%= link_to 'Edit', edit_external_link_repo_path(@external_link_repo) %> |
+<%= link_to 'Back', external_link_repos_path %>

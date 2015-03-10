@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  resources :parent_commits
-
-  resources :github_users
-
   get 'github/authorize'
   get 'users/auth/github/callback/auth_app_callback', to: 'github#auth_app_callback'
 
@@ -30,6 +26,19 @@ Rails.application.routes.draw do
       resources :pushes, only: [:index]
       resources :refs, only: [:index]
     end
+
+    resources :external_links do
+      resources :commits, only: [:index]
+    end
+
+    resources :external_link_commits, as: 'elcs'
+
+    resources :external_link_repos
+
+    resources :parent_commits
+
+    resources :github_users
+
     get 'repos/:id/create_hook', to: 'repos#create_hook', as: :repo_create_hook
   end
 

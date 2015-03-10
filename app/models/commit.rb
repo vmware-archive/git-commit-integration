@@ -10,6 +10,8 @@ class Commit < ActiveRecord::Base
   has_many :child_commits, class_name: 'ParentCommit', foreign_key: 'commit_id', dependent: :restrict_with_exception
   has_many :parents, through: :parent_commits, source: :commit, dependent: :restrict_with_exception
   has_many :children, through: :child_commits, source: :child_commit, dependent: :restrict_with_exception
+  has_many :external_link_commits
+  has_many :external_links, through: :external_link_commits
 
   # TODO: patch_identifier currently not populated for merge commits.
   #       See https://www.pivotaltracker.com/story/show/89873776

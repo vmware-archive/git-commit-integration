@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing External Link Repos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>External link</th>
+      <th>Repo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @external_link_repos.each do |external_link_repo| %>
+      <tr>
+        <td><%= external_link_repo.external_link_id %></td>
+        <td><%= external_link_repo.repo_id %></td>
+        <td><%= link_to 'Show', external_link_repo %></td>
+        <td><%= link_to 'Edit', edit_external_link_repo_path(external_link_repo) %></td>
+        <td><%= link_to 'Destroy', external_link_repo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New External link repo', new_external_link_repo_path %>

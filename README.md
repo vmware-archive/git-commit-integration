@@ -171,14 +171,14 @@ Associations:
 Attributes:
 
 * **`description`**: Description of external system and link type, e.g. "Pivotal Tracker Story"
-* **`extract_pattern`**: Regex to extract an ID from a commit.  E.g. `[#(\d+)\]` or `{#(\d+)}`
+* **`extract_pattern`**: Regex to extract an ID from a commit.  E.g. `\[#(\d+)\]` or `{#(\d+)}`
 * **`uri_template`**: template for URI, e.g.: `http://external-system.example.com/objects/:id` or `http://external-system.example.com/objects/:id?param=1`
 * **`replace_pattern`**: Regex to replace commit ID into uri_template, e.g.: `:id$` or `:id`
 
 Associations:
 
-* `has_many :commits`
-* `has_many :repos, through: :repo_external_link`
+* `has_many :commits, through: :external_link_commit`
+* `has_many :repos, through: :external_link_repo`
 
 Regex ID extraction examples:
 
@@ -198,19 +198,28 @@ Regex ID replacement examples:
  => "http://external-system.example.com/objects/123?param=1"
 ```
 
-### RepoExternalLink
+### ExternalLinkRepo
 
 Join table associating external links with repos
 
+Associations:
+
+* `belongs_to :external_link`
+* `belongs_to :repo`
+
+### ExternalLinkCommit
+
+Join table associating external links with commits
+
 Attributes:
 
-* **`repo_id`**: id of Repo
-* **`external_link_id`**: id of ExternalLink
+* **`external_id`**: External ID extracted from Commit based on ExternalLink
+* **`external_uri`**: External ID generated from Commit based on ExternalLink
 
 Associations:
 
-* `belongs_to :repo`
 * `belongs_to :external_link`
+* `belongs_to :commit`
 
 ## Implementation Details
 
@@ -290,7 +299,8 @@ tail -f /tmp/gci.log | grep '\[gci\]'
 * Make a repo (pick one to which you have admin access to create webhooks)
 * Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
 * Verify the webhook looks right in github settings
-* Make a push to the repo (from a dummy branch if you don't want to clutter master): `echo "foo - $(date)." >> foo && git add foo && git commit -m "foo - $(date)" && git push`
+* Make a push to the repo (from a dummy branch if you don't want to clutter master):
+  `EXTERNAL_ID=89109694; echo "foo - $(date)." >> foo && git add foo && git commit -m "[#${EXTERNAL_ID}] foo - $(date)" && git push`
 * Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.
 
 ### Running PWS prod env

@@ -4,6 +4,8 @@ class Repo < ActiveRecord::Base
   has_many :pushes, dependent: :restrict_with_exception
   has_many :refs, dependent: :restrict_with_exception
   has_many :commits, -> { order :committer_date }, dependent: :restrict_with_exception
+  has_many :external_link_repos
+  has_many :external_links, through: :external_link_repos
   belongs_to :user
 
   validates_presence_of :github_identifier

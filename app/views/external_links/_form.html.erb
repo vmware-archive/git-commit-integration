@@ -1,0 +1,37 @@
+<%= form_for(@external_link) do |f| %>
+  <% if @external_link.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@external_link.errors.count, "error") %> prohibited this external_link from being saved:</h2>
+
+      <ul>
+      <% @external_link.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :extract_pattern %><br>
+    <%= f.text_field :extract_pattern %>
+  </div>
+  <div class="field">
+    <%= f.label :uri_template %><br>
+    <%= f.text_field :uri_template %>
+  </div>
+  <div class="field">
+    <%= f.label :replace_pattern %><br>
+    <%= f.text_field :replace_pattern %>
+  </div>
+  <div class="field">
+    <%= f.label :commits_processed_thru %><br>
+    <%= f.text_field :commits_processed_thru %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

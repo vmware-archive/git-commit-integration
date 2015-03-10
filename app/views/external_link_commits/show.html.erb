@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>External link:</strong>
+  <%= @external_link_commit.external_link_id %>
+</p>
+
+<p>
+  <strong>Commit:</strong>
+  <%= @external_link_commit.commit_id %>
+</p>
+
+<%= link_to 'Edit', edit_elc_path(@external_link_commit) %> |
+<%= link_to 'Back', elcs_path %>
