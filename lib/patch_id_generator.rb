@@ -26,7 +26,8 @@ class PatchIdGenerator
           "Run curl command and verify it: `#{curl_cmd}`.  Patch text:\n\n#{patch_text}"
     end
 
-    patch_identifier_text = process("echo '#{patch_text}' | git patch-id --stable")
+    patch_text_escaped = patch_text.gsub('"', '\"')
+    patch_identifier_text = process("echo \"#{patch_text_escaped}\" | git patch-id --stable")
 
     unless patch_identifier_text =~ /^[0-9a-f]+ #{sha}$/
       raise "[gci] #{DateTime.now.utc.iso8601} Invalid patch_identifier retrieved.  " \
