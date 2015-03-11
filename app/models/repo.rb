@@ -1,9 +1,10 @@
 class Repo < ActiveRecord::Base
   include GithubApiFactory
+  include OrderedCommits
 
   has_many :pushes, dependent: :restrict_with_exception
   has_many :refs, dependent: :restrict_with_exception
-  has_many :commits, -> { order :committer_date }, dependent: :restrict_with_exception
+  has_many :unordered_commits, class_name: 'Commit', dependent: :restrict_with_exception
   has_many :external_link_repos
   has_many :external_links, through: :external_link_repos
   belongs_to :user

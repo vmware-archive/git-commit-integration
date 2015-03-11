@@ -1,6 +1,8 @@
 class Push < ActiveRecord::Base
+  include OrderedCommits
+
   has_many :push_commits, dependent: :restrict_with_exception
-  has_many :commits, -> { order :committer_date }, through: :push_commits, dependent: :restrict_with_exception
+  has_many :unordered_commits, source: :commit, through: :push_commits, dependent: :restrict_with_exception
   belongs_to :ref
   belongs_to :repo
 

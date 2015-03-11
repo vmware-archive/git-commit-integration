@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150310060000) do
+ActiveRecord::Schema.define(version: 20150311025147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20150310060000) do
   end
 
   create_table "external_link_commits", force: :cascade do |t|
-    t.integer  "external_link_id"
-    t.integer  "commit_id"
+    t.integer  "external_link_id", null: false
+    t.integer  "commit_id",        null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "external_id",      null: false
@@ -40,17 +40,17 @@ ActiveRecord::Schema.define(version: 20150310060000) do
   end
 
   create_table "external_link_repos", force: :cascade do |t|
-    t.integer  "external_link_id"
-    t.integer  "repo_id"
+    t.integer  "external_link_id", null: false
+    t.integer  "repo_id",          null: false
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
 
   create_table "external_links", force: :cascade do |t|
-    t.string   "description"
-    t.string   "extract_pattern"
-    t.string   "uri_template"
-    t.string   "replace_pattern"
+    t.string   "description",            null: false
+    t.string   "extract_pattern",        null: false
+    t.string   "uri_template",           null: false
+    t.string   "replace_pattern",        null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.datetime "commits_processed_thru"
@@ -65,10 +65,11 @@ ActiveRecord::Schema.define(version: 20150310060000) do
 
   create_table "parent_commits", force: :cascade do |t|
     t.integer  "commit_id"
-    t.string   "sha",             null: false
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer  "child_commit_id", null: false
+    t.string   "sha",                                    null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.integer  "child_commit_id",                        null: false
+    t.integer  "child_secondary_sort_order", default: 1, null: false
   end
 
   create_table "push_commits", force: :cascade do |t|

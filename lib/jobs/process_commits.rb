@@ -6,8 +6,10 @@ class ProcessCommits
     commit_count = 0
     pushes.each do |push|
       ActiveRecord::Base.transaction do
+        child_commit = nil
         push.commits_hashes_from_payload.each do |push_commit_hash|
-          CommitFactory.new.create(push_commit_hash.fetch('id'),push.repo, push.ref.reference, true, push)
+          commit = CommitFactory.new.create(push_commit_hash.fetch('id'),push.repo, push.ref.reference, true, child_commit, push)
+          child_commit = commit
           commit_count += 1
         end
         push.update_attributes!(commits_processed: true)

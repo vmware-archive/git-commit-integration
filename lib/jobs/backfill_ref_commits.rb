@@ -31,9 +31,12 @@ class BackfillRefCommits
 
       ActiveRecord::Base.transaction do
         associated_commits = []
+        child_commit = nil
         commit_hashes_on_ref.each do |commit_hash|
           # create or associate all existing commits on the ref
-          associated_commits << CommitFactory.new.create(commit_hash.fetch('sha'), repo, ref.reference, true)
+          commit = CommitFactory.new.create(commit_hash.fetch('sha'), repo, ref.reference, true, child_commit)
+          child_commit = commit
+          associated_commits << commit
           commit_count += 1
         end
 

@@ -1,10 +1,11 @@
 class CommitFactory
   include GithubApiFactory
 
-  def create(sha, repo, reference, exists, push = nil)
+  def create(sha, repo, reference, exists, child_commit, push = nil)
     ActiveRecord::Base.transaction do
       commit = Commit.find_by_sha(sha)
       unless commit
+        is_latest_commit_on_ref = child_commit.blank?
         commit = Commit.new
 
         # set attributes which found in full commit hash obtained directly via github api
@@ -39,13 +40,29 @@ class CommitFactory
 
         commit.save!
 
+        # update child commit's ParentCommit relationship to point to this commit
+        unless is_latest_commit_on_ref
+          matching_parent_commit = child_commit.parent_commits.where(sha: commit.sha).first
+          unless matching_parent_commit
+            raise "[gci] #{DateTime.now.utc.iso8601} Unable to find parent commit for child commit id " \
+            "#{child_commit.id}, sha #{commit.sha} (needs to be associated with new commit #{commit.id} as parent)"
+          end
+          matching_parent_commit.update_attributes!(commit_id: commit.id)
+        end
+
         # create parent commits (association)
         commit_api_response.parents.each do |parent_hash|
-          commit_id = nil
+          attrs = {
+            commit_id: nil
+          }
           if parent = Commit.find_by_sha(parent_hash.sha)
-            commit_id = parent.id
+            attrs[:commit_id] = parent.id
           end
-          commit.parent_commits.create_with(commit_id: commit_id).
+          # handle proper sorting of commits which have the same committer_date...
+          if !is_latest_commit_on_ref && child_commit.committer_date == commit.committer_date
+            attrs[:child_secondary_sort_order] = matching_parent_commit.child_secondary_sort_order + 1
+          end
+          commit.parent_commits.create_with(attrs).
             find_or_create_by!(sha: parent_hash.sha)
         end
 
