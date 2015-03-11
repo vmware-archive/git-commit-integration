@@ -5,6 +5,7 @@
 <table>
   <thead>
     <tr>
+      <th>Reports</th>
       <th>Description</th>
       <th>Extract pattern</th>
       <th>Uri template</th>
@@ -18,6 +19,9 @@
   <tbody>
     <% @external_links.each do |external_link| %>
       <tr>
+        <td>
+          <%= link_to "ExternalLink Ref Commits", reports_external_link_ref_commits_path(external_link_id: external_link.id) %>
+        </td>
         <td><%= external_link.description %></td>
         <td><%= external_link.extract_pattern %></td>
         <td><%= external_link.uri_template %></td>
