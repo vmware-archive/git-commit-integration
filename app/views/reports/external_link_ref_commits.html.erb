@@ -1,2 +1,29 @@
-<h1>Reports#external_link_ref_commits</h1>
-<p>Find me in app/views/reports/external_link_ref_commits.html.erb</p>
+<p id="notice"><%= notice %></p>
+
+<h1>Reports - External Link Ref Commits</h1>
+<h2>for External Link: "<%= @external_link.description %>"</h2>
+<ul>
+  <% @external_link.repos.each do |repo| %>
+    <li>
+      <%= repo.url %>
+      <ul>
+        <% repo.refs.each do |ref| %>
+          <li>
+            <%= ref.reference %> - <%= ref.repo.url %> - id <%= ref.id %>
+            <ul>
+              <% @external_link.commits.joins(ref_commits: :ref).where('refs.id = ?', ref.id).each do |commit| %>
+                <% external_uri = ExternalLinkUriGenerator.new(@external_link, commit).generate.fetch(:external_uri) %>
+                <li>
+                  refids: <%= commit.refs.map{|r| r.id}.join(',') %> -
+                  <%= link_to(external_uri, external_uri, target: :blank) %> -
+                  <%= link_to(commit.sha, repo.commit_link(commit.sha), target: :blank) %> -
+                  <%= commit.message %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>

@@ -80,7 +80,12 @@ class CommitFactory
       end
 
       # create ref and association if they don't yet exist
-      ref = Ref.create_with(repo: repo).find_or_create_by!(reference: reference)
+      ref_attrs = {reference: reference, repo: repo}
+      ref = Ref.where(ref_attrs).first
+      unless ref
+        ref_attrs[:repo] = repo
+        ref = Ref.create!(ref_attrs)
+      end
       ref_commit = commit.ref_commits.create_with(exists: exists).find_or_create_by!(ref: ref)
       ref_commit.update_attributes!(exists: exists) unless ref_commit.exists? == exists
 

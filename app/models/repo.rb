@@ -67,6 +67,11 @@ class Repo < ActiveRecord::Base
     return github_user, github_repo
   end
 
+  def commit_link(sha)
+    user, repo = user_and_repo
+    "https://github.com/#{user}/#{repo}/commit/#{sha}"
+  end
+
   private
 
   def do_create_hook(github, hook_config)

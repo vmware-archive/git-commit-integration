@@ -44,7 +44,7 @@ class BackfillRefCommits
         associated_commit_ids = associated_commits.map { |commit| commit.id }
         ref.ref_commits.each do |existing_ref_commit|
           unless associated_commit_ids.include?(existing_ref_commit.commit_id)
-            existing_ref_commit.update_attribute!(exists: false)
+            existing_ref_commit.update_attributes!(exists: false)
           end
         end
       end

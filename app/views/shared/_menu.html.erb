@@ -12,25 +12,41 @@
       </ul>
     </li>
     <li>
-      <%= link_to "Repos", repos_path %>
+      Resources
+      <ul>
+        <li>
+          <%= link_to "Repos", repos_path %>
+        </li>
+        <li>
+          Pushes (go thru Repo)
+        </li>
+        <li>
+          Commits (go thru Repo)
+        </li>
+        <li>
+          Refs (go thru Repo)
+        </li>
+        <li>
+          <%= link_to "External Links", external_links_path %>
+        </li>
+        <li>
+          <%= link_to "External Link Repos", external_link_repos_path %>
+        </li>
+        <li>
+          <%= link_to "External Link Commits", elcs_path %>
+        </li>
+      </ul>
     </li>
     <li>
-      Pushes (go thru Repo)
-    </li>
-    <li>
-      Commits (go thru Repo)
-    </li>
-    <li>
-      Refs (go thru Repo)
-    </li>
-    <li>
-      <%= link_to "External Links", external_links_path %>
-    </li>
-    <li>
-      <%= link_to "External Link Repos", external_link_repos_path %>
-    </li>
-    <li>
-      <%= link_to "External Link Commits", elcs_path %>
+      Reports
+      <ul>
+        <li>
+          <%= link_to "External Links", reports_external_links_path %>
+        </li>
+        <li>
+          External Link Ref Commits (Go thru Reports -> External Links)
+        </li>
+      </ul>
     </li>
   </ul>
 </div>
