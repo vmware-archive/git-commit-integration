@@ -308,6 +308,8 @@ tail -f /tmp/gci.log | grep '\[gci\]'
 
 ### Running PWS prod env
 
+* Set up cf command line (go cli): http://docs.run.pivotal.io/starting/#install-login - Tools link
+* `cf login` - http://docs.run.pivotal.io/devguide/installcf/whats-new-v6.html#login
 * Make a github prod application: https://github.com/settings/applications
 * create a space on PWS, get cf command line, log in
 * `cf push`
