@@ -172,7 +172,8 @@ Attributes:
 
 * **`description`**: Description of external system and link type, e.g. "Pivotal Tracker Story"
 * **`extract_pattern`**: Regex to extract an ID from a commit.  E.g. `\[#(\d+)\]` or `{#(\d+)}`
-* **`uri_template`**: template for URI, e.g.: `http://external-system.example.com/objects/:id` or `http://external-system.example.com/objects/:id?param=1`
+* **`uri_template`**: template for URI, e.g.: `https://www.pivotaltracker.com/story/show/:id` or
+   `http://external-system.example.com/objects/:id` or `http://external-system.example.com/objects/:id?param=1`
 * **`replace_pattern`**: Regex to replace commit ID into uri_template, e.g.: `:id$` or `:id`
 
 Associations:
@@ -192,6 +193,8 @@ Regex ID extraction examples:
 Regex ID replacement examples:
 
 ```
+2.1.5 :022 > 'https://www.pivotaltracker.com/story/show/:id'.gsub(/:id$/,'123')
+ => "http://external-system.example.com/objects/123"
 2.1.5 :022 > 'http://external-system.example.com/objects/:id'.gsub(/:id$/,'123')
  => "http://external-system.example.com/objects/123"
 2.1.5 :023 > 'http://external-system.example.com/objects/:id\?param=1'.gsub(/:id/,'123')
