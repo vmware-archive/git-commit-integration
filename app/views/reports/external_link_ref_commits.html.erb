@@ -9,12 +9,11 @@
       <ul>
         <% repo.refs.each do |ref| %>
           <li>
-            <%= ref.reference %> - <%= ref.repo.url %> - id <%= ref.id %>
+            <%= ref.reference %>
             <ul>
               <% @external_link.commits.joins(ref_commits: :ref).where('refs.id = ?', ref.id).each do |commit| %>
                 <% external_uri = ExternalLinkUriGenerator.new(@external_link, commit).generate.fetch(:external_uri) %>
                 <li>
-                  refids: <%= commit.refs.map{|r| r.id}.join(',') %> -
                   <%= link_to(external_uri, external_uri, target: :blank) %> -
                   <%= link_to(commit.sha, repo.commit_link(commit.sha), target: :blank) %> -
                   <%= commit.message %>
