@@ -19,6 +19,7 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Display all commits for a repo
 * Display branches for a repo (i.e. head refs)
   * initially just for pushed refs, eventually all can be pulled via: `curl -s https://api.github.com/repos/:owner/:repo/git/refs/heads`)
+* populate patch-id onto all created Commits
 * Display all commits which are currently or were previously on a given branch (ref)
 
 ### Killer Features
@@ -253,6 +254,10 @@ initdb /usr/local/var/postgres -E utf8
 ### Setting up google oauth2 in development env
 
 * Make a github dev application: https://github.com/settings/applications
+  * application name: `git-commit-integration-dev`
+  * Homepage URL: `http://localhost:3000`
+  * Application Description: `dev`
+  * Authorization Callback URL: `http://localhost:3000/users/auth/github/callback`
 * copy .env.local.example to .env.local
 * Copy the app's client id and client secret into .env.local
 
@@ -341,11 +346,12 @@ github.repos.commits.all(github_user, github_repo) # all commits on default bran
 github.repos.commits.all(github_user, github_repo).first # first commit on default branch
 github.repos.commits.all(github_user, github_repo, sha: 'some sha').first.commit.message  # get all commits then message of first
 github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').sha # find a commit then get its sha
-github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').commit.message  # find a commit then get its message
+github.repos.commits.find(github_user, github_repo, repo.commits.first.sha).author.login # find a commit then get its author's login
+github.repos.commits.find(github_user, github_repo, repo.commits.first.sha).commit.message  # find a commit then get its message
 github.git.references.list(github_user, github_repo) # list all refs for a repo
 github.git.references.get(github_user, github_repo, 'heads/dummybranch') # get a single ref
 github.git.references.get(github_user, github_repo, 'heads/dummybranch').object.sha # get the latest sha (commit) on a ref
-github.repos.commits.list(github_user, github_repo, sha: '7497993e5a0ab3d95f491ac2b7944e43487c5570') # list all commits on a ref or branch starting at sha
+github.repos.commits.list(github_user, github_repo, sha: repo.commits.first.sha) # list all commits on a ref or branch starting at sha
 ```
 
 See https://developer.github.com/v3/repos/commits/ for commits structure
