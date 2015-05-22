@@ -2,8 +2,9 @@
 
 <h1>Reports - External Links</h1>
 
-<table>
-  <thead>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
     <tr>
       <th>Reports</th>
       <th>Description</th>
@@ -11,9 +12,9 @@
       <th>Uri template</th>
       <th>Replace pattern</th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @external_links.each do |external_link| %>
       <tr>
         <td>
@@ -26,5 +27,6 @@
         <td><%= external_link.commits_processed_thru %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

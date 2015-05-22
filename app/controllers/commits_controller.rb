@@ -14,7 +14,7 @@ class CommitsController < ApplicationController
         when @push
           @push.commits
         else
-          Commit.where(repo_id: @repo.id)
+          @repo.commits
       end
   end
 

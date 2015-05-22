@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :commits, only: [] do
       resources :pushes, only: [:index]
       resources :refs, only: [:index]
+      resources :parent_commits, except: [:edit, :new]
     end
 
     resources :external_links do
@@ -34,8 +35,6 @@ Rails.application.routes.draw do
     resources :external_link_commits, as: 'elcs'
 
     resources :external_link_repos
-
-    resources :parent_commits
 
     resources :github_users
 

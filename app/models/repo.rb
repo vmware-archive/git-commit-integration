@@ -76,7 +76,7 @@ class Repo < ActiveRecord::Base
 
   def do_create_hook(github, hook_config)
     github_user, github_repo = user_and_repo
-    github.repos.hooks.create(github_user, github_repo, {name: 'web', active: false, events: ['push'], config: hook_config})
+    github.repos.hooks.create(github_user, github_repo, {name: 'web', active: true, events: ['push'], config: hook_config})
   end
 
   def set_github_identifier

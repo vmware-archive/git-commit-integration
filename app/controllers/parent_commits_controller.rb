@@ -1,24 +1,16 @@
 class ParentCommitsController < ApplicationController
-  before_action :set_parent_commit, only: [:show, :edit, :update, :destroy]
+  before_action :set_commit
+  before_action :set_parent_commit, only: [:show, :update, :destroy]
 
   # GET /parent_commits
   # GET /parent_commits.json
   def index
-    @parent_commits = ParentCommit.all
+    @parent_commits = @commit.parent_commits.all
   end
 
   # GET /parent_commits/1
   # GET /parent_commits/1.json
   def show
-  end
-
-  # GET /parent_commits/new
-  def new
-    @parent_commit = ParentCommit.new
-  end
-
-  # GET /parent_commits/1/edit
-  def edit
   end
 
   # POST /parent_commits
@@ -56,7 +48,7 @@ class ParentCommitsController < ApplicationController
   def destroy
     @parent_commit.destroy
     respond_to do |format|
-      format.html { redirect_to parent_commits_url, notice: 'Parent commit was successfully destroyed.' }
+      format.html { redirect_to commit_parent_commits_url(@commit), notice: 'Parent commit was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,7 +56,11 @@ class ParentCommitsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_parent_commit
-    @parent_commit = ParentCommit.find(params[:id])
+    @parent_commit = @commit.parent_commits.find(params[:id])
+  end
+
+  def set_commit
+    @commit = Commit.find(params[:commit_id])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

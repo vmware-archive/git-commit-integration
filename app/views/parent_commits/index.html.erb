@@ -1,29 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Parent Commits</h1>
+<h1>Listing Associated Parent Commits for Child Commit <%= @commit.sha %> in repo <%= @commit.repo.url %></h1>
 
-<table>
-  <thead>
-  <tr>
-    <th>Commit</th>
-    <th>Sha</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
 
-  <tbody>
-  <% @parent_commits.each do |parent_commit| %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
     <tr>
-      <td><%= parent_commit.commit_id %></td>
-      <td><%= parent_commit.sha %></td>
-      <td><%= link_to 'Show', parent_commit %></td>
-      <td><%= link_to 'Edit', edit_parent_commit_path(parent_commit) %></td>
-      <td><%= link_to 'Destroy', parent_commit, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      <th>ID</th>
+      <th>Associated Parent Commit</th>
+      <th>Child Commit</th>
+      <th colspan="2"></th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
 
+    <tbody>
+    <% @parent_commits.each do |parent_commit| %>
+      <tr>
+        <td><%= parent_commit.commit_id %></td>
+        <td>
+          <p><%= link_to parent_commit.sha, commit_path(parent_commit.commit) %></p>
+        </td>
+        <td>
+          <p><%= link_to parent_commit.child_commit.sha, commit_path(parent_commit.child_commit) %></p>
+        </td>
+        <td><%= link_to 'Show', commit_parent_commit_path(@commit, parent_commit) %></td>
+        <td><%= link_to 'Destroy', commit_parent_commit_path(@commit, parent_commit), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 <br>
-
-<%= link_to 'New Parent commit', new_parent_commit_path %>

@@ -2,8 +2,9 @@
 
 <h1>Listing External Links</h1>
 
-<table>
-  <thead>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
     <tr>
       <th>Reports</th>
       <th>Description</th>
@@ -14,9 +15,9 @@
       <th>Repos</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @external_links.each do |external_link| %>
       <tr>
         <td>
@@ -27,14 +28,15 @@
         <td><%= external_link.uri_template %></td>
         <td><%= external_link.replace_pattern %></td>
         <td><%= external_link.commits_processed_thru %></td>
-        <td><%= external_link.repos.map{|repo| repo.url}.join(', ') %></td>
+        <td><%= external_link.repos.map { |repo| repo.url }.join(', ') %></td>
         <td><%= link_to 'Show', external_link %></td>
         <td><%= link_to 'Edit', edit_external_link_path(external_link) %></td>
-        <td><%= link_to 'Destroy', external_link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', external_link, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
 <br>
 

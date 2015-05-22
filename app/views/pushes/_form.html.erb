@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :repo_id %><br>
-    <%= f.text_field :repo_id %>
+    <%= @repo.id %>
   </div>
   <div class="field">
     <%= f.label :commits_processed %><br>
@@ -29,6 +29,7 @@
   </div>
   <div class="field">
     <%= f.label :head_commit %><br>
+
     <%= f.text_field :head_commit %>
   </div>
   <div class="actions">

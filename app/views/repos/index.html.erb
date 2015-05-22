@@ -8,6 +8,7 @@
     <tr>
       <th>Associated Resources</th>
       <th>Url</th>
+      <th>Total Commits</th>
       <th>Github Identifier</th>
       <th>Hook</th>
       <th colspan="3"></th>
@@ -25,6 +26,7 @@
           <p><%= link_to 'refs', repo_refs_path(repo) %></p>
         </td>
         <td><%= repo.url %></td>
+        <td><%= repo.unordered_commits.size %></td>
         <td><%= repo.github_identifier %></td>
         <td>
           <div class="json">
