@@ -41,14 +41,6 @@ class BackfillRefCommits
         next
       end
 
-
-puts "DEBUG: [gci] #{DateTime.now.utc.iso8601} BackfillRefCommits - ordering of " \
-  "db vs. github commits differs for ref #{ref.reference} on repo #{ref.repo.url}. " \
-  "\nshas_on_ref_db:     #{shas_on_ref_db}" \
-  "\nshas_on_ref_github: #{shas_on_ref_github}"
-
-
-
       puts "[gci] #{DateTime.now.utc.iso8601} BackfillRefCommits - ref #{ref.id} - '#{ref.reference}' is out of date, backfilling " \
         "(SHAs on Github but not in DB: #{shas_missing_from_db.join(',')}) (repo #{ref.repo.url})"
 
