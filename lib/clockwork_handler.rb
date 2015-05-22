@@ -27,14 +27,14 @@ module Clockwork
   end
 
   process_commits_interval =
-    ENV['PROCESS_COMMITS_INTERVAL'] ? ENV['PROCESS_COMMITS_INTERVAL'].to_i : 15
+    ENV['PROCESS_COMMITS_INTERVAL'] ? ENV['PROCESS_COMMITS_INTERVAL'].to_i : 7.5
   every(process_commits_interval.seconds, 'process_commits')
 
   backfill_ref_commits_interval =
-    ENV['BACKFILL_REF_COMMITS_INTERVAL'] ? ENV['BACKFILL_REF_COMMITS_INTERVAL'].to_i : 30
+    ENV['BACKFILL_REF_COMMITS_INTERVAL'] ? ENV['BACKFILL_REF_COMMITS_INTERVAL'].to_i : 15
   every(backfill_ref_commits_interval.seconds, 'backfill_ref_commits')
 
   process_external_link_commits_interval =
-    ENV['PROCESS_EXTERNAL_LINK_COMMITS_INTERVAL'] ? ENV['PROCESS_EXTERNAL_LINK_COMMITS_INTERVAL'].to_i : 20
+    ENV['PROCESS_EXTERNAL_LINK_COMMITS_INTERVAL'] ? ENV['PROCESS_EXTERNAL_LINK_COMMITS_INTERVAL'].to_i : 10
   every(process_external_link_commits_interval.seconds, 'process_external_link_commits')
 end
