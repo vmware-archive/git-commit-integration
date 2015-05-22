@@ -18,7 +18,7 @@
     <% @external_link_commits.each do |external_link_commit| %>
       <tr>
         <td><%= external_link_commit.external_link_id %></td>
-        <td><%= external_link_commit.commit_id %></td>
+        <td><%= link_to external_link_commit.commit_id, commit_path(external_link_commit.commit_id) %></td>
         <td><%= external_link_commit.external_id %></td>
         <td><%= link_to external_link_commit.external_uri, external_link_commit.external_uri %></td>
         <td><%= link_to 'Show', elc_path(external_link_commit) %></td>

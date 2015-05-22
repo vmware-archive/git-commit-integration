@@ -7,6 +7,7 @@
     <thead>
     <tr>
       <th>Reports</th>
+      <th>ID</th>
       <th>Description</th>
       <th>Extract pattern</th>
       <th>Uri template</th>
@@ -23,6 +24,7 @@
         <td>
           <%= link_to "ExternalLink Ref Commits", reports_external_link_ref_commits_path(external_link_id: external_link.id) %>
         </td>
+        <td><%= external_link.id %></td>
         <td><%= external_link.description %></td>
         <td><%= external_link.extract_pattern %></td>
         <td><%= external_link.uri_template %></td>

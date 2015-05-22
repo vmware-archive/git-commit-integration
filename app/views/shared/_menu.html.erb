@@ -47,7 +47,14 @@
           <%= link_to "External Links", reports_external_links_path %>
         </li>
         <li>
-          External Link Ref Commits (Go thru Reports -> External Links)
+          External Link Ref Commits:
+          <ul>
+            <% ExternalLink.all.each do |external_link| %>
+              <li>
+                <%= link_to external_link.description, reports_external_link_ref_commits_path(external_link_id: external_link.id) %>
+              </li>
+            <% end %>
+          </ul>
         </li>
       </ul>
     </li>
