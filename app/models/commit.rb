@@ -23,7 +23,7 @@ class Commit < ActiveRecord::Base
   validates_uniqueness_of :sha, scope: :repo, allow_blank: false
 
   def exists_on_ref?(ref)
-    ref_commit = self.ref_commits.where(ref: ref)
+    ref_commit = self.ref_commits.where(ref: ref).first
     return false unless ref_commit
     ref_commit.exists?
   end

@@ -28,7 +28,8 @@ class BackfillRefCommits
       shas_on_ref_db = ref.commits.reverse_order.all.map { |commit| commit.sha }
 
       shas_missing_from_db = shas_on_ref_github - shas_on_ref_db
-      if shas_missing_from_db.blank?
+      shas_missing_from_github = shas_on_ref_db - shas_on_ref_github # commits that were deleted / rebased away...
+      if shas_missing_from_db.blank? && shas_missing_from_github.blank?
         puts "[gci] #{DateTime.now.utc.iso8601} BackfillRefCommits - ref #{ref.id} - '#{ref.reference}' is up-to-date, skipping (repo #{ref.repo.url})"
 
         unless shas_on_ref_db == shas_on_ref_github
