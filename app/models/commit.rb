@@ -6,8 +6,8 @@ class Commit < ActiveRecord::Base
   belongs_to :author_github_user, class_name: 'GithubUser', foreign_key: 'author_github_user_id'
   belongs_to :committer_github_user, class_name: 'GithubUser', foreign_key: 'committer_github_user_id'
   belongs_to :repo
-  has_many :parent_commits, foreign_key: 'child_commit_id', dependent: :restrict_with_exception
-  has_many :child_commits, class_name: 'ParentCommit', foreign_key: 'commit_id', dependent: :restrict_with_exception
+  has_many :parent_commits, foreign_key: 'child_commit_id', dependent: :destroy #:restrict_with_exception
+  has_many :child_commits, class_name: 'ParentCommit', foreign_key: 'commit_id', dependent: :destroy #:restrict_with_exception
   has_many :parents, through: :parent_commits, source: :commit, dependent: :restrict_with_exception
   has_many :children, through: :child_commits, source: :child_commit, dependent: :restrict_with_exception
   has_many :external_link_commits

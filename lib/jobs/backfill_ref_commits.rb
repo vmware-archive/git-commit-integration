@@ -44,29 +44,35 @@ class BackfillRefCommits
       puts "[gci] #{DateTime.now.utc.iso8601} BackfillRefCommits - ref #{ref.id} - '#{ref.reference}' is out of date, backfilling " \
         "(SHAs on Github but not in DB: #{shas_missing_from_db.join(',')}) (repo #{ref.repo.url})"
 
-      ActiveRecord::Base.transaction do
-        associated_commits = []
-        child_commit = nil
-        commit_hashes_on_ref_github.each do |commit_hash|
-          sha_from_github = commit_hash.fetch('sha')
+      associated_commits = []
+      child_commit = nil
+      commit_hashes_on_ref_github.each do |commit_hash|
+        sha_from_github = commit_hash.fetch('sha')
 
+        commit = nil
+        ActiveRecord::Base.transaction do
           # create or associate all existing commits on the ref
           commit = CommitFactory.new.find_or_create(sha_from_github, repo, child_commit)
 
           # create ref and association if they don't yet exist
           RefCommitAssociator.new.associate_if_necessary(repo, ref.reference, commit)
-
-          child_commit = commit
-          associated_commits << commit
-          commit_count += 1
         end
 
-        # flag any no-longer-existing commits as nonexistent
-        associated_commit_ids = associated_commits.map { |commit| commit.id }
-        ref.reload.ref_commits.each do |existing_ref_commit|
-          unless associated_commit_ids.include?(existing_ref_commit.commit_id)
-            existing_ref_commit.update_attributes!(exists: false)
-          end
+        child_commit = commit
+        associated_commits << commit
+        commit_count += 1
+
+        backfill_sleep = ENV.fetch('BACKFILL_SLEEP', 0.5)
+        puts "[gci] #{DateTime.now.utc.iso8601} BackfillRefCommits - sleeping #{backfill_sleep} seconds " \
+            "between backfilling commits (repo #{ref.repo.url})"
+        sleep backfill_sleep
+      end
+
+      # flag any no-longer-existing commits as nonexistent
+      associated_commit_ids = associated_commits.map { |commit| commit.id }
+      ref.reload.ref_commits.each do |existing_ref_commit|
+        unless associated_commit_ids.include?(existing_ref_commit.commit_id)
+          existing_ref_commit.update_attributes!(exists: false)
         end
       end
     end
