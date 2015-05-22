@@ -24,11 +24,13 @@
       <th>Children</th>
       <th>Parents</th>
       <th>Patch Id</th>
+      <th>Refs</th>
       <th>Message</th>
       <th>Author github user</th>
       <th>Author date</th>
       <th>Committer github user</th>
-      <th>Committer date</th>
+      <th>Committer date (primary sort)</th>
+      <th>Secondary Sort Order (lowest is latest)</th>
       <th colspan="3"></th>
     </tr>
     </thead>
@@ -49,15 +51,17 @@
             <%= commit.data %>
           </div>
         </td>
-        <td><%= commit.sha %></td>
-        <td><%= commit.children.map { |commit| commit.sha }.join(' ') %></td>
-        <td><%= commit.parents.map { |commit| commit.sha }.join(' ') %></td>
+        <td><%= truncate(commit.sha, length: 6, omission: '') %></td>
+        <td><%= commit.children.map { |commit| truncate(commit.sha, length: 6, omission: '') }.join(' ') %></td>
+        <td><%= commit.parents.map { |commit| truncate(commit.sha, length: 6, omission: '') }.join(' ') %></td>
         <td><%= commit.patch_identifier %></td>
+        <td><%= commit.refs.map { |ref| ref.reference }.join(' ') %></td>
         <td><%= commit.message %></td>
         <td><%= commit.author_github_user_id %></td>
         <td><%= commit.author_date %></td>
         <td><%= commit.committer_github_user_id %></td>
         <td><%= commit.committer_date %></td>
+        <td><%= commit.parent_commits.map{|pc| pc.child_secondary_sort_order} %></td>
         <td><%= link_to 'Show', commit %></td>
         <td><%= link_to 'Edit', edit_commit_path(commit) %></td>
         <td><%= link_to 'Destroy', commit, method: :delete, data: {confirm: 'Are you sure?'} %></td>

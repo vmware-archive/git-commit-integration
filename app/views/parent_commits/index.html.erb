@@ -10,6 +10,7 @@
       <th>ID</th>
       <th>Associated Parent Commit</th>
       <th>Child Commit</th>
+      <th>Child Secondary Sort Order (lowest is latest)</th>
       <th colspan="2"></th>
     </tr>
     </thead>
@@ -17,12 +18,16 @@
     <tbody>
     <% @parent_commits.each do |parent_commit| %>
       <tr>
-        <td><%= parent_commit.commit_id %></td>
+        <td><%= parent_commit.id %></td>
         <td>
-          <p><%= link_to parent_commit.sha, commit_path(parent_commit.commit) %></p>
+          <p><%= parent_commit.commit_id %></p>
+          <p><%#= link_to parent_commit.sha, commit_path(parent_commit.commit) %></p>
         </td>
         <td>
           <p><%= link_to parent_commit.child_commit.sha, commit_path(parent_commit.child_commit) %></p>
+        </td>
+        <td>
+          <p><%= parent_commit.child_secondary_sort_order %></p>
         </td>
         <td><%= link_to 'Show', commit_parent_commit_path(@commit, parent_commit) %></td>
         <td><%= link_to 'Destroy', commit_parent_commit_path(@commit, parent_commit), method: :delete, data: {confirm: 'Are you sure?'} %></td>
