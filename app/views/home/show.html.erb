@@ -51,6 +51,11 @@
       <%= link_to '(re)create Webhook', repos_path %>
       (must be repo owner or have permission to create webhooks - will need to be recreated if ngrok host changes)
     </li>
+    <li>
+      Create any refs (branches/tags) which you want to automatically populate.
+      Use the 'refs' link on the <%= link_to 'Repos page', repos_path %>
+      (Note: any refs which are pushed to the repo will be automatically added)
+    </li>
   </ol>
 </div>
 

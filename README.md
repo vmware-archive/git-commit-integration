@@ -321,6 +321,12 @@ tail -f /tmp/gci.log | grep '\[gci\]'
 * `cf push`
 * Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
 
+## Using App
+
+* See Homepage in running app for instructions
+
+## Debugging/Hacking
+
 ### Using Github API from rails console
 
 See https://github.com/peter-murach/github
