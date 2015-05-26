@@ -251,8 +251,9 @@ rm -rf /usr/local/var/postgres
 initdb /usr/local/var/postgres -E utf8
 ```
 
-### Setting up google oauth2 in development env
+### Setting up Github app and google oauth2
 
+* (examples below are for dev env, use appropriate URL if running on PWS)
 * Make a github dev application: https://github.com/settings/applications
   * application name: `git-commit-integration-dev`
   * Homepage URL: `http://localhost:3000`

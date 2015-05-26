@@ -1,7 +1,63 @@
+<h1>Setup Instructions:</h1>
+<h2>(Click "Home" to return here)</h2>
+<h2>Dev Env only steps:</h2>
+<div class="row">
+  <ol>
+    <li>
+      (dev env or new PWS envs only) Ensure Github app is created for current env
+      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a>)
+    </li>
+    <li>
+      (dev env only) Ensure .env.local exists and contains correct values for Github app
+      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a>)
+    </li>
+    <li>
+      (dev env only) Ensure ngrok is installed and runnable at localhost 3000 and .env.local contains correct ngrok host
+      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a> -
+      may need to be updated if ngrok host changes)
+    </li>
+    <li>
+      (dev env only) Create dev database
+      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a>)
+    </li>
+    <li>
+      (dev env only) Start local dev env:
+      <pre>bin/foreman start -f Procfile.local</pre>
+    </li>
+  </ol>
+</div>
+<h2>Setup Steps:</h2>
+<div class="row">
+  <ol>
+    <li>
+      Sign in with Github:
+      <% if user_signed_in? %>
+        Done, signed in as: <%= current_user.email %>
+      <% else %>
+        <%= link_to "Sign in with Github", user_omniauth_authorize_path(:github) %> (Note: If in non-dev env, make sure
+        this page is https before clicking)
+      <% end %>
+    </li>
+    <li>
+      <%= link_to "Authorize App", github_authorize_path, data: {no_turbolink: true} %>
+      (may need to be repeated if ngrok host changes on dev env)
+    </li>
+    <li>
+      <%= link_to "Create a Repo", repos_path %>
+      e.g. git URL, https://github.com/pivotaltracker/dummytest-public.git, NOT web URL
+      https://github.com/pivotaltracker/dummytest-public
+    </li>
+    <li>
+      <%= link_to '(re)create Webhook', repos_path %>
+      (must be repo owner or have permission to create webhooks - will need to be recreated if ngrok host changes)
+    </li>
+  </ol>
+</div>
+
+<h1>Links:</h1>
 <div class="row">
   <ul>
     <li><a href="https://www.pivotaltracker.com/n/projects/1286262">Project Backlog on Pivotal Tracker</a></li>
     <li><a href="https://github.com/pivotaltracker/git-commit-integration">Source Code on Github</a></li>
   </ul>
 </div>
-
