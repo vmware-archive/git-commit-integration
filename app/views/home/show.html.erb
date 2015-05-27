@@ -1,6 +1,6 @@
-<h1>Setup Instructions:</h1>
+<h1>Setup and Usage Instructions:</h1>
 <h2>(Click "Home" to return here)</h2>
-<h2>Dev Env only steps:</h2>
+<h2>Dev Env Only Setup Steps:</h2>
 <div class="row">
   <ol>
     <li>
@@ -58,9 +58,24 @@
     </li>
     <li>
       Create <%= link_to "External Links", external_links_path %>
-      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a> for details)
+      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a> for
+      details)
+    </li>
+    <li>
+      <%= link_to "Associate External Links with Repos", external_link_repos_path %>
+      (see <a href="https://github.com/pivotaltracker/git-commit-integration/blob/master/README.md">README</a> for
+      details)
     </li>
   </ol>
+</div>
+<h2>View Reports:</h2>
+<h3>External Link Ref Commits Report:</h3>
+<div class="row">
+  <ul>
+    <li>
+      Grouping is: External Link -> Repo -> Ref -> Commit
+    </li>
+  </ul>
 </div>
 
 <h1>Links:</h1>
