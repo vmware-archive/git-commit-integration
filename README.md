@@ -228,9 +228,13 @@ Associations:
 ## Implementation Details
 
 * Pushes will be created real-time by listening for webhooks
-* Background job will run for each push, and create/update
+* A background job will run for each push, and create/update
   Refs, Commits, RefCommits, and update all RefCommit `exists` flags
   accordingly.
+* A background job will "backfill" and auto-update Commit and Ref
+  data based on current state of database and Github repo
+* A background job will automatically associate commits with
+  external links based on commit data and properties of external links.
 
 ## Setup
 
