@@ -218,11 +218,50 @@ Join table associating external links with commits
 Attributes:
 
 * **`external_id`**: External ID extracted from Commit based on ExternalLink
-* **`external_uri`**: External ID generated from Commit based on ExternalLink
+* **`external_uri`**: External URI generated from Commit based on ExternalLink
 
 Associations:
 
 * `belongs_to :external_link`
+* `belongs_to :commit`
+
+### Deploy
+
+Represents a Deploy, AKA environment ("deploy" is a [Twelve-Factor App term](http://12factor.net/codebase))
+which has a single Commit deployed to it at any given time, and exposes that Commit's SHA
+at a specified URI via a non-authenticated GET request, in a way that can be extracted
+via a specified regex.
+
+Attributes:
+
+* **`name`**: Name of the deploy. E.g. 'production', 'staging', 'demo'
+* **`uri`**: Non-authenticated URI at which the currently-deployed SHA will be exposed
+* **`extract_pattern`**: Regex to extract the currently-deployed SHA
+  from the `uri`.  E.g. `<span id="sha">([0123456789abcdef]+)<\/span>`
+
+Regex ID extraction examples:
+
+```
+2.1.6 :007 > /<span id="sha">([0123456789abcdef]+)<\/span>/.match('<span id="sha">624de1c8149beec34beb2a481f0306b1cc41b61a</span>')[1]
+ => "624de1c8149beec34beb2a481f0306b1cc41b61a" 
+```
+
+Associations:
+
+* `has_many :commits, through: :deploy_commit`
+
+### DeployCommit
+
+Join table associating deploys with commits
+
+Attributes:
+
+* **`deployed_sha`**: SHA extracted from Commit based on `extract_pattern` in Deploy
+* **`updated_at`**: Timestamp at which `deployed_sha` was last created/updated from the Deploy.
+
+Associations:
+
+* `belongs_to :deploy`
 * `belongs_to :commit`
 
 ## Implementation Details
@@ -235,6 +274,8 @@ Associations:
   data based on current state of database and Github repo
 * A background job will automatically associate commits with
   external links based on commit data and properties of external links.
+* A background job will automatically update information about currently-deployed
+  SHAs based on data in Deploy
 
 ## Setup
 
