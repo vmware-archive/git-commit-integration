@@ -40,6 +40,8 @@
       <tr>
         <td><%= commit.id %></td>
         <td>
+          <p><%= link_to 'external links', commit_external_links_path(commit) %></p>
+
           <p><%= link_to 'pushes', commit_pushes_path(commit) %></p>
 
           <p><%= link_to 'refs', commit_refs_path(commit) %></p>

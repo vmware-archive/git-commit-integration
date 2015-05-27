@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :external_link_id %><br>
-    <%= f.number_field :external_link_id %>
+    <%= f.collection_select(:external_link_id, ExternalLink.all, :id, :description) %>
   </div>
   <div class="field">
     <%= f.label :repo_id %><br>
-    <%= f.number_field :repo_id %>
+    <%= f.collection_select(:repo_id, Repo.all, :id, :url) %>
   </div>
   <div class="actions">
     <%= f.submit %>

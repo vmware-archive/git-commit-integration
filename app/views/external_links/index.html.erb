@@ -8,6 +8,7 @@
     <tr>
       <th>Reports</th>
       <th>ID</th>
+      <th>Associated Resources</th>
       <th>Description</th>
       <th>Extract pattern</th>
       <th>Uri template</th>
@@ -25,6 +26,13 @@
           <%= link_to "ExternalLink Ref Commits", reports_external_link_ref_commits_path(external_link_id: external_link.id) %>
         </td>
         <td><%= external_link.id %></td>
+        <td>
+          <%# TODO: Per-user security for repo display %>
+          commits for repo:
+          <% external_link.repos.each do |repo| %>
+            <%= link_to repo.url, external_link_commits_path(external_link, repo_id: repo.id) %>
+          <% end %>
+        </td>
         <td><%= external_link.description %></td>
         <td><%= external_link.extract_pattern %></td>
         <td><%= external_link.uri_template %></td>

@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :commits, only: [:index]
     end
     resources :commits, only: [] do
+      resources :external_links, only: [:index]
       resources :pushes, only: [:index]
       resources :refs, only: [:index]
       resources :parent_commits, except: [:edit, :new]

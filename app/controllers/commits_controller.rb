@@ -1,5 +1,6 @@
 class CommitsController < ApplicationController
   before_action :set_commit, only: [:show, :edit, :update, :destroy]
+  before_action :set_external_link, only: [:index]
   before_action :set_ref, only: [:index]
   before_action :set_push, only: [:index, :new, :create]
   before_action :set_repo
@@ -9,6 +10,8 @@ class CommitsController < ApplicationController
   def index
     @commits =
       case
+        when @external_link
+          @external_link.commits
         when @ref
           @ref.commits
         when @push
@@ -76,6 +79,10 @@ class CommitsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_commit
     @commit = Commit.find(params[:id])
+  end
+
+  def set_external_link
+    @external_link = ExternalLink.find(params[:external_link_id]) if params[:external_link_id]
   end
 
   def set_ref
