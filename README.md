@@ -368,7 +368,7 @@ tail -f /tmp/gci.log | grep '\[gci\]'
 
 ## Using App
 
-* See Homepage in running app for instructions
+* See [Homepage](https://github.com/pivotaltracker/git-commit-integration/blob/master/app/views/home/show.html.erb) in running app for instructions
 
 ## Debugging/Hacking
 
