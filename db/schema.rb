@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20150603014423) do
   end
 
   create_table "deploy_commits", force: :cascade do |t|
+    t.integer  "deploy_id"
     t.string   "deployed_sha"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

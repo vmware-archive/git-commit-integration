@@ -260,7 +260,9 @@ Associations:
 
 ### DeployCommit
 
-Join table associating deploys with commits
+Join table associating deploys with commits.  Note that the association to Commit is through
+the Commit's SHA attribute as the foriegn key, not the ID.  This allows the DeployCommit
+to be created even if its commit does not yet exist.
 
 Attributes:
 
@@ -270,7 +272,7 @@ Attributes:
 Associations:
 
 * `belongs_to :deploy`
-* `belongs_to :commit`
+* `belongs_to :commit, :foreign_key => 'sha'`
 
 ## Implementation Details
 
