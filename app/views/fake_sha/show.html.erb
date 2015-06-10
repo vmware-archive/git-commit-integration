@@ -1,0 +1,16 @@
+<h1>
+  Fake SHA:
+  <% if params[:sha] %>
+    <span id="sha"><%= params.fetch(:sha) %></span>
+  <% else %>
+    UNDEFINED
+  <% end %>
+</h1>
+<h2>
+  (specify /fake_sha?sha=ABCDE as url param to define)
+</h2>
+<h3>
+  Use this controller to simulate an app deployed with a given SHA,
+  and expose the SHA in a span tag with a "sha" attribute,
+  in order to test Deploys and DeployCommits
+</h3>

@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deployed sha:</strong>
+  <%= @deploy_commit.deployed_sha %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_commit_path(@deploy_commit) %> |
+<%= link_to 'Back', deploy_commits_path %>

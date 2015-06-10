@@ -234,10 +234,13 @@ via a specified regex.
 
 Attributes:
 
-* **`name`**: Name of the deploy. E.g. 'production', 'staging', 'demo'
-* **`uri`**: Non-authenticated URI at which the currently-deployed SHA will be exposed
+* **`name`**: Name of the deploy. E.g. 'production', 'staging', 'demo', 'Pivotal Tracker'
+* **`uri`**: Non-authenticated URI at which the currently-deployed SHA will
+  be exposed.  E.g. `http://pivotaltracker.com/env_info` or
+  `http://localhost:3000/fake_sha?sha=ABCDE` 
 * **`extract_pattern`**: Regex to extract the currently-deployed SHA
-  from the `uri`.  E.g. `<span id="sha">([0123456789abcdef]+)<\/span>`
+  from the `uri`.  E.g. `<span id="sha">([0123456789abcdef]+)<\/span>` or
+  `<p>Git SHA: ([0123456789abcdef]+)\n<\/p>`
 
 Regex ID extraction examples:
 
@@ -246,13 +249,20 @@ Regex ID extraction examples:
  => "624de1c8149beec34beb2a481f0306b1cc41b61a" 
 ```
 
+```
+2.1.6 :006 > /<p>Git SHA: ([0123456789abcdef]+)\n<\/p>/.match("<p>Git SHA: 1a3a071a623a709395362e46bea6db6e0bdc56f2\n</p>")[1]
+ => "1a3a071a623a709395362e46bea6db6e0bdc56f2" 
+```
+
 Associations:
 
 * `has_many :commits, through: :deploy_commit`
 
 ### DeployCommit
 
-Join table associating deploys with commits
+Join table associating deploys with commits.  Note that the association to Commit is through
+the Commit's SHA attribute as the foriegn key, not the ID.  This allows the DeployCommit
+to be created even if its commit does not yet exist.
 
 Attributes:
 
@@ -262,7 +272,7 @@ Attributes:
 Associations:
 
 * `belongs_to :deploy`
-* `belongs_to :commit`
+* `belongs_to :commit, :foreign_key => 'sha'`
 
 ## Implementation Details
 

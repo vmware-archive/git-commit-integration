@@ -16,6 +16,8 @@ module Clockwork
           system('bin/rails runner lib/jobs/run_backfill_ref_commits.rb')
         when job == 'process_external_link_commits'
           system('bin/rails runner lib/jobs/run_process_external_link_commits.rb')
+        when job == 'process_deploy_commits'
+          system('bin/rails runner lib/jobs/run_process_deploy_commits.rb')
         else
           raise "[gci] #{DateTime.now.utc.iso8601} Unknown Clockwork job '#{job}'"
       end
@@ -37,4 +39,8 @@ module Clockwork
   process_external_link_commits_interval =
     ENV['PROCESS_EXTERNAL_LINK_COMMITS_INTERVAL'] ? ENV['PROCESS_EXTERNAL_LINK_COMMITS_INTERVAL'].to_i : 10
   every(process_external_link_commits_interval.seconds, 'process_external_link_commits')
+
+  process_deploy_commits_interval =
+    ENV['PROCESS_DEPLOY_COMMITS_INTERVAL'] ? ENV['PROCESS_DEPLOY_COMMITS_INTERVAL'].to_i : 20
+  every(process_deploy_commits_interval.seconds, 'process_deploy_commits')
 end
