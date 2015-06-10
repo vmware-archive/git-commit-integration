@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'fake_sha', to: 'fake_sha#show'
   get 'github/authorize'
   get 'users/auth/github/callback/auth_app_callback', to: 'github#auth_app_callback'
 
@@ -43,6 +44,9 @@ Rails.application.routes.draw do
 
     get 'reports/external_links'
     get 'reports/external_link_ref_commits'
+
+    resources :deploys
+    resources :deploy_commits
   end
 
   # unsecure and unauthencated actions:

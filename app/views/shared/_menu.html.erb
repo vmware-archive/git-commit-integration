@@ -9,6 +9,9 @@
         <li>
           <%= link_to "Authorize App", github_authorize_path, data: {no_turbolink: true} %>
         </li>
+        <li>
+          <%= link_to "Fake SHA", fake_sha_path %>
+        </li>
       </ul>
     </li>
     <li>
@@ -37,6 +40,12 @@
         </li>
         <li>
           <%= link_to "External Link Commits", elcs_path %>
+        </li>
+        <li>
+          <%= link_to "Deploys", deploys_path %>
+        </li>
+        <li>
+          <%= link_to "Deploy Commits", deploy_commits_path %>
         </li>
       </ul>
     </li>

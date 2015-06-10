@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @deploy.name %>
+</p>
+
+<p>
+  <strong>Uri:</strong>
+  <%= @deploy.uri %>
+</p>
+
+<p>
+  <strong>Extract pattern:</strong>
+  <%= @deploy.extract_pattern %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_path(@deploy) %> |
+<%= link_to 'Back', deploys_path %>

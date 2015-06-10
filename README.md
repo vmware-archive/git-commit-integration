@@ -234,16 +234,24 @@ via a specified regex.
 
 Attributes:
 
-* **`name`**: Name of the deploy. E.g. 'production', 'staging', 'demo'
-* **`uri`**: Non-authenticated URI at which the currently-deployed SHA will be exposed
+* **`name`**: Name of the deploy. E.g. 'production', 'staging', 'demo', 'Pivotal Tracker'
+* **`uri`**: Non-authenticated URI at which the currently-deployed SHA will
+  be exposed.  E.g. `http://pivotaltracker.com/env_info` or
+  `http://localhost:3000/fake_sha?sha=ABCDE` 
 * **`extract_pattern`**: Regex to extract the currently-deployed SHA
-  from the `uri`.  E.g. `<span id="sha">([0123456789abcdef]+)<\/span>`
+  from the `uri`.  E.g. `<span id="sha">([0123456789abcdef]+)<\/span>` or
+  `<p>Git SHA: ([0123456789abcdef]+)\n<\/p>`
 
 Regex ID extraction examples:
 
 ```
 2.1.6 :007 > /<span id="sha">([0123456789abcdef]+)<\/span>/.match('<span id="sha">624de1c8149beec34beb2a481f0306b1cc41b61a</span>')[1]
  => "624de1c8149beec34beb2a481f0306b1cc41b61a" 
+```
+
+```
+2.1.6 :006 > /<p>Git SHA: ([0123456789abcdef]+)\n<\/p>/.match("<p>Git SHA: 1a3a071a623a709395362e46bea6db6e0bdc56f2\n</p>")[1]
+ => "1a3a071a623a709395362e46bea6db6e0bdc56f2" 
 ```
 
 Associations:
