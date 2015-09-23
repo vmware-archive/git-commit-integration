@@ -287,6 +287,15 @@ Associations:
 * A background job will automatically update information about currently-deployed
   SHAs based on data in Deploy
 
+### DeployRepo
+
+Join table associating deploys with repos
+
+Associations:
+
+* `belongs_to :deploy`
+* `belongs_to :repo`
+
 ## Setup
 
 ### Installing/fixing postgres on OSX

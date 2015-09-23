@@ -1,0 +1,25 @@
+<%= form_for(@deploy_repo) do |f| %>
+  <% if @deploy_repo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deploy_repo.errors.count, "error") %> prohibited this deploy_repo from being saved:</h2>
+
+      <ul>
+      <% @deploy_repo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :deploy_id %><br>
+    <%= f.collection_select(:deploy_id, Deploy.all, :id, :name) %>
+  </div>
+  <div class="field">
+    <%= f.label :repo_id %><br>
+    <%= f.collection_select(:repo_id, Repo.all, :id, :url) %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

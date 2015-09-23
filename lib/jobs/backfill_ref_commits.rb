@@ -63,7 +63,7 @@ class BackfillRefCommits
         associated_commits << commit
         commit_count += 1
 
-        backfill_sleep = ENV.fetch('BACKFILL_SLEEP', 0.5)
+        backfill_sleep = ENV.fetch('BACKFILL_SLEEP', 0.5).to_f
         puts "[gci] #{DateTime.now.utc.iso8601} BackfillRefCommits - sleeping #{backfill_sleep} seconds " \
             "between backfilling commits (repo #{ref.repo.url})"
         sleep backfill_sleep

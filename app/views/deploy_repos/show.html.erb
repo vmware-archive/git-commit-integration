@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Deploy:</strong>
+  <%= @deploy_repo.deploy_id %>
+</p>
+
+<p>
+  <strong>Repo:</strong>
+  <%= @deploy_repo.repo_id %>
+</p>
+
+<%= link_to 'Edit', edit_deploy_repo_path(@deploy_repo) %> |
+<%= link_to 'Back', deploy_repos_path %>

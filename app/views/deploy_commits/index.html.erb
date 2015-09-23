@@ -2,25 +2,27 @@
 
 <h1>Listing Deploy Commits</h1>
 
-<table>
-  <thead>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
     <tr>
       <th>Deployed sha</th>
       <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @deploy_commits.each do |deploy_commit| %>
       <tr>
         <td><%= deploy_commit.deployed_sha %></td>
         <td><%= link_to 'Show', deploy_commit %></td>
         <td><%= link_to 'Edit', edit_deploy_commit_path(deploy_commit) %></td>
-        <td><%= link_to 'Destroy', deploy_commit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', deploy_commit, method: :delete, data: {confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
 
 <br>
 

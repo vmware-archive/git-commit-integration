@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reports - Deploy External Link Ref Commits</h1>
+<h2>for External Link: "<%= @external_link.description %>"</h2>
+<ul>
+  <% @deploys.each do |deploy| %>
+    <li>
+      <%= @deploy.name %>
+      <ul>
+        <% deploy.repos.each do |repo| %>
+          <li>
+            <%= repo.url %>
+            <ul>
+              <% repo.refs.each do |ref| %>
+                <li>
+                  <%= ref.reference %>
+                  <ul>
+                    <% @external_link.commits.joins(ref_commits: :ref).where('refs.id = ?', ref.id).each do |commit| %>
+                      <% external_uri = ExternalLinkUriGenerator.new(@external_link, commit).generate.fetch(:external_uri) %>
+                      <li>
+                        <% commit_style = commit.exists_on_ref?(ref) ? '' : 'text-decoration: line-through; color:red;' %>
+                        <span style="<%= commit_style %>">
+                          <%= link_to(external_uri, external_uri, target: :blank) %> -
+                          <%= link_to(truncate(commit.sha, length: 6, omission: ''), repo.commit_link(commit.sha), style: commit_style, target: :blank) %>
+                          -
+                          <%= commit.message %>
+                        </span>
+                        <% identical_commits = repo.unordered_commits.where(patch_identifier: commit.patch_identifier).where.not(id: commit.id) %>
+                        <% if identical_commits.present? %>
+                          <ul>
+                            <li>
+                              Identical commits:
+                              <% identical_commits.each do |identical_commit| %>
+                                <% identical_commit_style = identical_commit.exists_on_ref?(ref) ? '' : 'text-decoration: line-through; color:red;' %>
+                                <span style="<%= identical_commit_style %>">
+                                  <%= link_to(truncate(identical_commit.sha, length: 6, omission: ''),
+                                    repo.commit_link(identical_commit.sha),
+                                    style: identical_commit_style,
+                                    target: :blank) %>
+                                </span>
+                              <% end %>
+                            </li>
+                          </ul>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>

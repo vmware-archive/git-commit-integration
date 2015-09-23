@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Deploy Repos</h1>
+
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Deploy</th>
+      <th>Repo</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @deploy_repos.each do |deploy_repo| %>
+      <tr>
+        <td><%= deploy_repo.deploy_id %></td>
+        <td><%= deploy_repo.repo_id %></td>
+        <td><%= link_to 'Show', deploy_repo %></td>
+        <td><%= link_to 'Edit', edit_deploy_repo_path(deploy_repo) %></td>
+        <td><%= link_to 'Destroy', deploy_repo, method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<%= link_to 'New Deploy repo', new_deploy_repo_path %>
