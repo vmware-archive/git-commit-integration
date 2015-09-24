@@ -71,3 +71,6 @@ group :development do
   gem 'dotenv-rails', :github => 'bkeepers/dotenv'
 end
 
+group :test do
+  gem "codeclimate-test-reporter", require: nil
+end
