@@ -1,3 +1,5 @@
+[![CircleCI Build Status](https://circleci.com/gh/pivotaltracker/git-commit-integration.svg?style=shield&circle-token=6d009bddf85ec071d699359d592c5cf3de0dead7)](https://circleci.com/gh/organizations/pivotaltracker)
+
 # Git Commit Integration
 
 Exploring features described in https://github.com/pivotaltracker/git-commit-ux/blob/master/README.md
