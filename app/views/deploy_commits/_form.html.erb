@@ -12,8 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :deployed_sha %><br>
-    <%= f.text_field :deployed_sha %>
+    <%= f.label :deploy_id %><br>
+    <%= f.text_field :deploy_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sha %><br>
+    <%= f.text_field :sha %>
   </div>
   <div class="actions">
     <%= f.submit %>

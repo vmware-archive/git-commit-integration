@@ -1,1 +1,1 @@
-json.extract! @deploy_commit, :id, :deployed_sha, :created_at, :updated_at
+json.extract! @deploy_commit, :id, :deploy_id, :sha, :created_at, :updated_at

@@ -12,6 +12,7 @@ class Commit < ActiveRecord::Base
   has_many :children, through: :child_commits, source: :child_commit, dependent: :restrict_with_exception
   has_many :external_link_commits
   has_many :external_links, through: :external_link_commits
+  has_many :deploy_commits, primary_key: :sha, foreign_key: :sha
 
   # TODO: patch_identifier currently not populated for merge commits.
   #       See https://www.pivotaltracker.com/story/show/89873776

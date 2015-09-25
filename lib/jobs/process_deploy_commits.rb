@@ -5,9 +5,9 @@ class ProcessDeployCommits
     deploys = Deploy.all
     deploy_commit_count = 0
     deploys.each do |deploy|
-      deployed_sha = DeployedShaScraper.new.scrape(deploy)
-      if deployed_sha
-        DeployCommit.create_with(deployed_sha: deployed_sha).find_or_create_by!(deploy_id: deploy.id)
+      sha = DeployedShaScraper.new.scrape(deploy)
+      if sha
+        DeployCommit.create_with(sha: sha).find_or_create_by!(deploy_id: deploy.id)
         deploy_commit_count += 1
       end
     end

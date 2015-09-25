@@ -44,8 +44,8 @@ Rails.application.routes.draw do
 
     get 'repos/:id/create_hook', to: 'repos#create_hook', as: :repo_create_hook
 
-    get 'reports/external_links'
     get 'reports/external_link_ref_commits'
+    get 'reports/deploy_external_link_ref_commits'
 
     resources :deploys
     resources :deploy_commits

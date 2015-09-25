@@ -7,6 +7,8 @@ class Repo < ActiveRecord::Base
   has_many :unordered_commits, class_name: 'Commit', dependent: :restrict_with_exception
   has_many :external_link_repos
   has_many :external_links, through: :external_link_repos
+  has_many :deploys, through: :deploy_repos
+  has_many :deploy_repos
   belongs_to :user
 
   validates_presence_of :github_identifier

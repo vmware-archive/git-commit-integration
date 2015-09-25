@@ -69,6 +69,6 @@ class DeployCommitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deploy_commit_params
-      params.require(:deploy_commit).permit(:deployed_sha)
+      params.require(:deploy_commit).permit(:deploy_id, :sha)
     end
 end

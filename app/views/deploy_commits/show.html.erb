@@ -1,8 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Deployed ID:</strong>
+  <%= @deploy_commit.deploy_id %>
+</p>
+<p>
   <strong>Deployed sha:</strong>
-  <%= @deploy_commit.deployed_sha %>
+  <%= @deploy_commit.sha %>
 </p>
 
 <%= link_to 'Edit', edit_deploy_commit_path(@deploy_commit) %> |

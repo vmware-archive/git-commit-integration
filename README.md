@@ -66,6 +66,7 @@ Associations:
 * `has_many :refs` (auto-updated on every push)
 * `has_many :external_links, through: :repo_external_link`
 * `belongs_to :user`
+* `has_many :deploy_repos`
 
 ### GithubUser
 
@@ -117,6 +118,7 @@ Associations:
 * `belongs_to :author_github_user, :class_name => 'GithubUser', :foreign_key => 'author_github_user_id'`
 * `belongs_to :committer_github_user, :class_name => 'GithubUser', :foreign_key => 'committer_github_user_id'`
 * `has_many :parent_commits`
+* `has_many :deploy_commits, :primary_key => 'sha', :foreign_key => 'sha'`
 
 ### ParentCommit
 
@@ -259,22 +261,30 @@ Regex ID extraction examples:
 Associations:
 
 * `has_many :commits, through: :deploy_commit`
+* `has_many :deploy_commits`
+* `has_many :repos, through: :deploy_repos`
+* `has_many :deploy_repos`
 
 ### DeployCommit
 
-Join table associating deploys with commits.  Note that the association to Commit is through
+Join table associating deploys with commits.  There can be multiple DeployCommits for
+a single Deploy, because multiple repos may be deployed to the same "deploy" as part
+of a single web app.  E.g., the "backend" and "frontend" repos are both part of a
+single web app served at a single URL as a single deploy.
+
+Note that the association to Commit is through
 the Commit's SHA attribute as the foriegn key, not the ID.  This allows the DeployCommit
 to be created even if its commit does not yet exist.
 
 Attributes:
 
-* **`deployed_sha`**: SHA extracted from Commit based on `extract_pattern` in Deploy
-* **`updated_at`**: Timestamp at which `deployed_sha` was last created/updated from the Deploy.
+* **`sha`**: SHA extracted from Commit based on `extract_pattern` in Deploy
+* **`updated_at`**: Timestamp at which `sha` was last created/updated from the Deploy.
 
 Associations:
 
 * `belongs_to :deploy`
-* `belongs_to :commit, :foreign_key => 'sha'`
+* `belongs_to :commit, :primary_key => 'sha', :foreign_key => 'sha'`
 
 ## Implementation Details
 
@@ -291,7 +301,8 @@ Associations:
 
 ### DeployRepo
 
-Join table associating deploys with repos
+Join table associating deploys with repos.  Currently manually created, may
+be auto-detected via association through deploy commit in the future
 
 Associations:
 
