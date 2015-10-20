@@ -35,6 +35,137 @@ Exploring features described in https://github.com/pivotaltracker/git-commit-ux/
 * Display differently (Grouping or Collapsing based on `patch-id`) all different commits which have different
   SHAs but are actually the same commit based on the `patch-id`
 
+## Setup
+
+### Installing/fixing postgres on OSX
+
+```
+brew update
+
+brew install postgresql
+# or
+brew upgrade postgresql
+
+brew info postgresql # follow instructions to run on boot
+
+# DANGEROUS!
+rm -rf /usr/local/var/postgres
+
+initdb /usr/local/var/postgres -E utf8
+```
+
+### Setting up Github app and google oauth2
+
+* (examples below are for dev env, use appropriate URL if running on PWS)
+* Make a github dev application: https://github.com/settings/applications
+  * application name: `git-commit-integration-dev`
+  * Homepage URL: `http://localhost:3000`
+  * Application Description: `dev`
+  * Authorization Callback URL: `http://localhost:3000/users/auth/github/callback`
+* copy .env.local.example to .env.local
+* Copy the app's client id and client secret into .env.local
+
+### Installing ngrok
+
+Install ngrok to tunnel github webhooks to localhost (it will be run via foreman Procfile.local)
+
+```
+brew install ngrok
+```
+
+Make sure it runs, and grab the NGROK_HOST to put in your .env.local (it shouldn't change often)
+
+```
+ngrok 3000
+# grab the host (just host, not protocol or path), put in env.local
+# Ctrl C to kill it (it'll get run automatically by Foreman)
+```
+
+### Create dev env databases
+
+```
+bundle
+bin/rake db:create:all
+```
+
+### Running specs
+
+```
+bin/rake
+```
+
+### Running dev env server
+
+```
+# everything goes to stdout (12-factor app)
+bin/foreman start -f Procfile.local | tee /tmp/gci.log
+
+# filter out app logs in another window:
+tail -f /tmp/gci.log | grep '\[gci\]'
+```
+
+* (Optional) go to localhost:4040 to verify your NGROK_HOST hasn't changed
+* Go to http://localhost:3000
+* Sign in with Github
+* Click to authorize app
+* Make a repo (pick one to which you have admin access to create webhooks)
+* Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
+* Verify the webhook looks right in github settings
+* Make a push to the repo (from a dummy branch if you don't want to clutter master):
+  `EXTERNAL_ID=89109694; echo "foo - $(date)." >> foo && git add foo && git commit -m "[#${EXTERNAL_ID}] foo - $(date)" && git push`
+* Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.
+
+### Running PWS prod env
+
+* Set up cf command line (go cli): http://docs.run.pivotal.io/starting/#install-login - Tools link
+* `cf login` - http://docs.run.pivotal.io/devguide/installcf/whats-new-v6.html#login
+* Make a github prod application: https://github.com/settings/applications
+* create a space on PWS, get cf command line, log in
+* `cf push`
+* Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
+
+## Using App
+
+* See [Homepage](https://github.com/pivotaltracker/git-commit-integration/blob/master/app/views/home/show.html.erb) in running app for instructions
+
+## Debugging/Hacking
+
+### Using Github API from rails console
+
+See https://github.com/peter-murach/github
+
+Basic setup:
+```
+bin/rails c
+repo = Repo.first # or find...
+```
+
+To get a repo object directly:
+```
+repo_api_object = repo.github_api_object
+```
+
+To access repo object subresources (continuing from basic setup above):
+```
+require 'github_api_factory'
+include GithubApiFactory
+github_user, github_repo = repo.user_and_repo
+github = create_github_api_from_oauth_token(repo)
+github.repos.branches(github_user, github_repo).body.map{|branch| branch.name} # branches
+github.repos.commits.all(github_user, github_repo) # all commits on default branch (master)
+github.repos.commits.all(github_user, github_repo).first # first commit on default branch
+github.repos.commits.all(github_user, github_repo, sha: 'some sha').first.commit.message  # get all commits then message of first
+github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').sha # find a commit then get its sha
+github.repos.commits.find(github_user, github_repo, repo.commits.first.sha).author.login # find a commit then get its author's login
+github.repos.commits.find(github_user, github_repo, repo.commits.first.sha).commit.message  # find a commit then get its message
+github.git.references.list(github_user, github_repo) # list all refs for a repo
+github.git.references.get(github_user, github_repo, 'heads/dummybranch') # get a single ref
+github.git.references.get(github_user, github_repo, 'heads/dummybranch').object.sha # get the latest sha (commit) on a ref
+github.repos.commits.list(github_user, github_repo, sha: repo.commits.first.sha) # list all commits on a ref or branch starting at sha
+```
+
+See https://developer.github.com/v3/repos/commits/ for commits structure
+
 ## Models
 
 ### User
@@ -286,6 +417,21 @@ Associations:
 * `belongs_to :deploy`
 * `belongs_to :commit, :primary_key => 'sha', :foreign_key => 'sha'`
 
+### DeployRepo
+
+Join table associating deploys with repos.  Currently manually created, may
+be auto-detected via association through deploy commit in the future
+
+Associations:
+
+* `belongs_to :deploy`
+* `belongs_to :repo`
+
+## Entity Relationship Diagram
+
+![Entity Relationship Diagram](https://raw.githubusercontent.com/pivotaltracker/git-commit-integration/master/erd.png)
+[PDF Version of Entity Relationship Diagram](https://raw.githubusercontent.com/pivotaltracker/git-commit-integration/master/erd.pdf)
+
 ## Implementation Details
 
 * Pushes will be created real-time by listening for webhooks
@@ -298,145 +444,4 @@ Associations:
   external links based on commit data and properties of external links.
 * A background job will automatically update information about currently-deployed
   SHAs based on data in Deploy
-
-### DeployRepo
-
-Join table associating deploys with repos.  Currently manually created, may
-be auto-detected via association through deploy commit in the future
-
-Associations:
-
-* `belongs_to :deploy`
-* `belongs_to :repo`
-
-## Setup
-
-### Installing/fixing postgres on OSX
-
-```
-brew update
-
-brew install postgresql
-# or
-brew upgrade postgresql
-
-brew info postgresql # follow instructions to run on boot
-
-# DANGEROUS!
-rm -rf /usr/local/var/postgres
-
-initdb /usr/local/var/postgres -E utf8
-```
-
-### Setting up Github app and google oauth2
-
-* (examples below are for dev env, use appropriate URL if running on PWS)
-* Make a github dev application: https://github.com/settings/applications
-  * application name: `git-commit-integration-dev`
-  * Homepage URL: `http://localhost:3000`
-  * Application Description: `dev`
-  * Authorization Callback URL: `http://localhost:3000/users/auth/github/callback`
-* copy .env.local.example to .env.local
-* Copy the app's client id and client secret into .env.local
-
-### Installing ngrok
-
-Install ngrok to tunnel github webhooks to localhost (it will be run via foreman Procfile.local)
-
-```
-brew install ngrok
-```
-
-Make sure it runs, and grab the NGROK_HOST to put in your .env.local (it shouldn't change often)
-
-```
-ngrok 3000
-# grab the host (just host, not protocol or path), put in env.local
-# Ctrl C to kill it (it'll get run automatically by Foreman)
-```
-
-### Create dev env databases
-
-```
-bundle
-bin/rake db:create:all
-```
-
-### Running specs
-
-```
-bin/rake
-```
-
-### Running dev env server
-
-```
-# everything goes to stdout (12-factor app)
-bin/foreman start -f Procfile.local | tee /tmp/gci.log
-
-# filter out app logs in another window:
-tail -f /tmp/gci.log | grep '\[gci\]'
-```
-
-* (Optional) go to localhost:4040 to verify your NGROK_HOST hasn't changed
-* Go to http://localhost:3000
-* Sign in with Github
-* Click to authorize app
-* Make a repo (pick one to which you have admin access to create webhooks)
-* Click (re)create Webhook on the repo (must be an admin on the repo to create hooks)
-* Verify the webhook looks right in github settings
-* Make a push to the repo (from a dummy branch if you don't want to clutter master):
-  `EXTERNAL_ID=89109694; echo "foo - $(date)." >> foo && git add foo && git commit -m "[#${EXTERNAL_ID}] foo - $(date)" && git push`
-* Verify the push record gets created in the app (via webhook going through ngrok).  Check github/ngrok if it fails.
-
-### Running PWS prod env
-
-* Set up cf command line (go cli): http://docs.run.pivotal.io/starting/#install-login - Tools link
-* `cf login` - http://docs.run.pivotal.io/devguide/installcf/whats-new-v6.html#login
-* Make a github prod application: https://github.com/settings/applications
-* create a space on PWS, get cf command line, log in
-* `cf push`
-* Set GITHUB_KEY and GITHUB_SECRET env vars on PWS console
-
-## Using App
-
-* See [Homepage](https://github.com/pivotaltracker/git-commit-integration/blob/master/app/views/home/show.html.erb) in running app for instructions
-
-## Debugging/Hacking
-
-### Using Github API from rails console
-
-See https://github.com/peter-murach/github
-
-Basic setup:
-```
-bin/rails c
-repo = Repo.first # or find...
-```
-
-To get a repo object directly:
-```
-repo_api_object = repo.github_api_object
-```
-
-To access repo object subresources (continuing from basic setup above):
-```
-require 'github_api_factory'
-include GithubApiFactory
-github_user, github_repo = repo.user_and_repo
-github = create_github_api_from_oauth_token(repo)
-github.repos.branches(github_user, github_repo).body.map{|branch| branch.name} # branches
-github.repos.commits.all(github_user, github_repo) # all commits on default branch (master)
-github.repos.commits.all(github_user, github_repo).first # first commit on default branch
-github.repos.commits.all(github_user, github_repo, sha: 'some sha').first.commit.message  # get all commits then message of first
-github.repos.commits.find(github_user, github_repo, 'f6afe0c8f3a1f28120a1778d257be11ee24c33d2').sha # find a commit then get its sha
-github.repos.commits.find(github_user, github_repo, repo.commits.first.sha).author.login # find a commit then get its author's login
-github.repos.commits.find(github_user, github_repo, repo.commits.first.sha).commit.message  # find a commit then get its message
-github.git.references.list(github_user, github_repo) # list all refs for a repo
-github.git.references.get(github_user, github_repo, 'heads/dummybranch') # get a single ref
-github.git.references.get(github_user, github_repo, 'heads/dummybranch').object.sha # get the latest sha (commit) on a ref
-github.repos.commits.list(github_user, github_repo, sha: repo.commits.first.sha) # list all commits on a ref or branch starting at sha
-```
-
-See https://developer.github.com/v3/repos/commits/ for commits structure
 

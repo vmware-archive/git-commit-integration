@@ -66,6 +66,7 @@ end
 
 group :development do
   gem 'dotenv-rails', :github => 'bkeepers/dotenv'
+  gem 'rails-erd'
 end
 
 group :test do
